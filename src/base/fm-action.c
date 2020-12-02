@@ -659,19 +659,11 @@ static GIcon * _fm_action_get_icon(GAppInfo *appinfo)
     return icon;
 }
 
-struct ChildSetup
-{
-    char *display;
-    char *sn_id;
-};
-
 static void child_setup(gpointer user_data)
 {
-    struct ChildSetup* data = (struct ChildSetup*)user_data;
-    if (data->display)
-        g_setenv("DISPLAY", data->display, TRUE);
-    if (data->sn_id)
-        g_setenv("DESKTOP_STARTUP_ID", data->sn_id, TRUE);
+    char *sn_id = (char *)user_data;
+    if (sn_id)
+        g_setenv("DESKTOP_STARTUP_ID", sn_id, TRUE);
 }
 
 static gboolean _do_launch(FmAction *action, GAppLaunchContext *launch_context,
@@ -720,10 +712,8 @@ static gboolean _do_launch(FmAction *action, GAppLaunchContext *launch_context,
     {
         FmActionMenu *menu;
         GList *launched_files, *l;
-        struct ChildSetup data;
+        char *sn_id = NULL;
 
-        data.display = NULL;
-        data.sn_id = NULL;
         if (launch_context)
         {
             menu = _get_top_menu(action->menu); /* validated by _expand_params */
@@ -732,11 +722,8 @@ static gboolean _do_launch(FmAction *action, GAppLaunchContext *launch_context,
                 launched_files = g_list_prepend(launched_files,
                                 fm_path_to_gfile(fm_file_info_get_path(l->data)));
             launched_files = g_list_reverse(launched_files);
-            data.display = g_app_launch_context_get_display(launch_context,
-                                                            G_APP_INFO(action),
-                                                            launched_files);
             if (action->use_sn)
-                data.sn_id = g_app_launch_context_get_startup_notify_id(launch_context,
+                sn_id = g_app_launch_context_get_startup_notify_id(launch_context,
                                                                         G_APP_INFO(action),
                                                                         launched_files);
             g_list_free_full(launched_files, g_object_unref);
@@ -747,11 +734,11 @@ static gboolean _do_launch(FmAction *action, GAppLaunchContext *launch_context,
         if (str->str[0] != '/')
             _expand_params(str, "%d", action->menu, FALSE, NULL); /* see the spec */
         ok = g_spawn_async(str->str, argv, NULL,
-                           G_SPAWN_SEARCH_PATH, child_setup, &data, NULL, error);
+                           G_SPAWN_SEARCH_PATH, child_setup, sn_id, NULL, error);
         if (!ok)
         {
-            if (data.sn_id)
-                g_app_launch_context_launch_failed(launch_context, data.sn_id);
+            if (sn_id)
+                g_app_launch_context_launch_failed(launch_context, sn_id);
         }
         g_strfreev(argv);
     }

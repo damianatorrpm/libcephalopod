@@ -33,7 +33,7 @@
 #include <config.h>
 #endif
 
-#include "gtk-compat.h"
+#include "glib-compat.h"
 #include "fm-clipboard.h"
 #include "fm-gtk-utils.h"
 

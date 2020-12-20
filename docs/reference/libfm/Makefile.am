@@ -87,7 +87,6 @@ IGNORE_HFILES= \
 	exo-tree-view.h \
 	fm-actions.h \
 	glib-compat.h \
-	gtk-compat.h \
 	$(NULL)
 
 # Images to copy into HTML directory.

@@ -28,7 +28,7 @@
  *
  */
 #include "fm-dnd-auto-scroll.h"
-#include "gtk-compat.h"
+#include "glib-compat.h"
 
 #define SCROLL_EDGE_SIZE 15
 

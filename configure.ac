@@ -87,16 +87,10 @@ fi
 IT_PROG_INTLTOOL([0.40.0])
 
 dnl libgtk version
-AC_ARG_WITH(gtk,
-    [AC_HELP_STRING([--with-gtk=VER],
-        [choose Gtk+ version for libfm-gtk build (default=2)])
-AC_HELP_STRING([--without-gtk],
-        [disable libfm-gtk build])],
-    [ac_with_gtk="${withval}"],
-    [ac_with_gtk=2]
-)
-AM_COND_IF(EXTRALIB_ONLY,
-    [ac_with_gtk=no])
+AC_ARG_ENABLE([gtk3],
+    AS_HELP_STRING([--enable-gtk3],
+        [enable GTK 3 support (default: yes)]),
+    gtk3=$enableval, gtk3="yes")
 
 # modules required
 if test x"$enable_actions" = xyes; then
@@ -110,31 +104,21 @@ PKG_CHECK_MODULES(GIO, [$gio_modules])
 AC_SUBST(GIO_CFLAGS)
 AC_SUBST(GIO_LIBS)
 
-if test x"$ac_with_gtk" != xno; then
-  case "$ac_with_gtk" in
-    3|3.*)
-      pkg_modules="$gio_modules gtk+-3.0 pango >= 1.16.0 cairo >= 1.8.0"
-      LIBFM_GTK_LTLIBRARIES=libfm-gtk3.la
-      LIBFM_GTK_PC=libfm-gtk3.pc
-      ac_with_gtk="3.0"
-      ;;
-    *)
-      pkg_modules="$gio_modules gtk+-2.0 >= 2.18.0 pango >= 1.16.0 cairo >= 1.8.0"
-      LIBFM_GTK_LTLIBRARIES=libfm-gtk.la
-      LIBFM_GTK_PC=libfm-gtk.pc
-      ac_with_gtk="2.0"
-      ;;
-  esac
+if test x"$gtk3" = x"yes"; then
+  pkg_modules="$gio_modules gtk+-3.0 >= 3.22.0 pango >= 1.16.0 cairo >= 1.8.0"
+  LIBFM_GTK_LTLIBRARIES=libfm-gtk3.la
+  LIBFM_GTK_PC=libfm-gtk3.pc
   PKG_CHECK_MODULES(GTK, [$pkg_modules])
   LIBFM_PREF_APPS="libfm-pref-apps lxshortcut"
+  ac_with_gtk="3.0"
 else
   dnl automake uses GTK_CFLAGS for glib-compat.c compilation
   GTK_CFLAGS="${GIO_CFLAGS}"
   GTK_LIBS=
   LIBFM_GTK_LTLIBRARIES=
   LIBFM_GTK_PC=
-  ac_with_gtk="none"
   LIBFM_PREF_APPS=
+  ac_with_gtk="none"
 fi
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
@@ -308,7 +292,6 @@ AC_CONFIG_FILES([
     docs/reference/libfm/Makefile
     docs/reference/libfm/version.xml
     libfm.pc
-    libfm-gtk.pc
     libfm-gtk3.pc
     libfm-extra.pc
 ])
@@ -330,7 +313,7 @@ echo "GIO module for preferred apps (for glib < 2.28 only):   $giomodulesdir"
 else
 echo "GIO module for preferred apps (for glib < 2.28 only):   not required"
 fi
-echo "Build libfm-gtk for Gtk+ version:                       $ac_with_gtk"
+echo "Build libfm-gtk3:                                       $gtk3"
 echo "Build API doc with gtk-doc (recommended for make dist): $enable_gtk_doc"
 echo
 echo

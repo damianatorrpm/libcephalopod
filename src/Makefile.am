@@ -28,12 +28,6 @@ glib_compat_SOURCES= \
 	glib-compat.h \
 	$(NULL)
 
-gtk_compat_SOURCES= \
-	$(glib_compat_SOURCES) \
-	gtk-compat.c \
-	gtk-compat.h \
-	$(NULL)
-
 base_SOURCES = \
 	base/fm-action.c \
 	base/fm-app-info.c \
@@ -99,7 +93,7 @@ exo_SOURCES = \
 
 libfm_gtk_SOURCES = \
 	fm-gtk.c \
-	$(gtk_compat_SOURCES) \
+	$(glib_compat_SOURCES) \
 	$(exo_SOURCES) \
 	gtk/fm-app-chooser-combo-box.c \
 	gtk/fm-app-chooser-dlg.c \
@@ -323,7 +317,7 @@ bin_PROGRAMS = @LIBFM_PREF_APPS@
 endif
 
 libfm_pref_apps_SOURCES = \
-	$(gtk_compat_SOURCES) \
+	$(glib_compat_SOURCES) \
 	tools/libfm-pref-apps.c \
 	$(NULL)
 
@@ -374,7 +368,7 @@ lxshortcut_LDADD = \
 if ENABLE_DEMO
 bin_PROGRAMS += libfm-demo
 libfm_demo_SOURCES = \
-	$(gtk_compat_SOURCES) \
+	$(glib_compat_SOURCES) \
 	demo/libfm-demo.c \
 	demo/main-win.c demo/main-win.h \
 	$(NULL)

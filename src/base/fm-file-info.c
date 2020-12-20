@@ -53,15 +53,6 @@
 #include "fm-config.h"
 #include "fm-utils.h"
 
-/* support for libmenu-cache 0.4.x */
-#ifndef MENU_CACHE_CHECK_VERSION
-# ifdef HAVE_MENU_CACHE_DIR_LIST_CHILDREN
-#  define MENU_CACHE_CHECK_VERSION(_a,_b,_c) (_a == 0 && _b < 5) /* < 0.5.0 */
-# else
-#  define MENU_CACHE_CHECK_VERSION(_a,_b,_c) 0 /* not even 0.4.0 */
-# endif
-#endif
-
 #define COLLATE_USING_DISPLAY_NAME    ((char*)-1)
 
 static FmIcon* icon_locked_folder = NULL;
@@ -801,9 +792,7 @@ void fm_file_info_set_from_menu_cache_item(FmFileInfo* fi, MenuCacheItem* item)
     {
         fi->mode = S_IFDIR;
         fi->mime_type = fm_mime_type_ref(_fm_mime_type_get_inode_directory());
-#if MENU_CACHE_CHECK_VERSION(0, 5, 0)
         fi->hidden = !menu_cache_dir_is_visible(MENU_CACHE_DIR(item));
-#endif
     }
     else if(menu_cache_item_get_type(item) == MENU_CACHE_TYPE_APP)
     {

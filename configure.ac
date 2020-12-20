@@ -136,7 +136,7 @@ dnl gmodule may be used for libfm-chooser-hack.la
 AM_COND_IF(EXTRALIB_ONLY,
     [MENU_CACHE_CFLAGS=
     MENU_CACHE_LIBS=],
-    [menu_modules="libmenu-cache >= 0.3.2"
+    [menu_modules="libmenu-cache >= 0.5.0"
     PKG_CHECK_MODULES(MENU_CACHE, [$menu_modules])])
 AC_SUBST(MENU_CACHE_CFLAGS)
 AC_SUBST(MENU_CACHE_LIBS)

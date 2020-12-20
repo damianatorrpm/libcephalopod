@@ -118,7 +118,6 @@ typedef enum
  * @confirm_trash: (since 1.2.0) ask before moving files to trash can
  * @show_thumbnail: show thumbnails
  * @thumbnail_local: show thumbnails for local files only
- * @show_internal_volumes: show system internal volumes in side pane. (udisks-only)
  * @si_unit: use SI prefix for file sizes
  * @advanced_mode: enable advanced features for experienced user
  * @force_startup_notify: (since 1.0.1) use startup notify by default
@@ -171,7 +170,6 @@ struct _FmConfig
     gboolean confirm_trash;
     gboolean show_thumbnail;
     gboolean thumbnail_local;
-    gboolean show_internal_volumes;
     gboolean si_unit;
     gboolean advanced_mode;
     gboolean force_startup_notify;

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libfm 1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-13 00:10+0300\n"
+"POT-Creation-Date: 2020-12-20 10:39+0100\n"
 "PO-Revision-Date: 2015-06-14 16:43+0000\n"
 "Last-Translator: صفا الفليج <safa1996alfulaij@gmail.com>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
@@ -53,20 +53,17 @@ msgstr "التّط_بيقات المثبّتة"
 msgid "<b>C_ommand line to execute:</b>"
 msgstr "<b>الأمر الّذي سيُ_نفّذ:</b>"
 
-#: ../data/ui/app-chooser.glade.h:5
-#: ../src/modules/gtk-fileprop-x-desktop.c:275
+#: ../data/ui/app-chooser.glade.h:5 ../src/modules/gtk-fileprop-x-desktop.c:275
 msgid "_Browse..."
 msgstr "ت_صفّح..."
 
 #. row 1: "Terminal" GtkCheckButton
-#: ../data/ui/app-chooser.glade.h:6
-#: ../src/modules/gtk-fileprop-x-desktop.c:294
+#: ../data/ui/app-chooser.glade.h:6 ../src/modules/gtk-fileprop-x-desktop.c:294
 msgid "_Execute in terminal emulator"
 msgstr "نفّ_ذ في محاكي الطّرفيّة"
 
 #. row 2: "X-KeepTerminal" GtkCheckButton
-#: ../data/ui/app-chooser.glade.h:7
-#: ../src/modules/gtk-fileprop-x-desktop.c:306
+#: ../data/ui/app-chooser.glade.h:7 ../src/modules/gtk-fileprop-x-desktop.c:306
 msgid "_Keep terminal window open after command execution"
 msgstr "أب_قِ نافذة الطّرفيّة مفتوحة بعد تنفيذ الأمر"
 
@@ -290,9 +287,8 @@ msgid "None"
 msgstr "بلا"
 
 #: ../data/ui/file-prop.glade.h:32
-msgctxt ""
-"It is a directory access bit - 'sticky' - where only owner can delete a file "
-"from it"
+#, fuzzy
+msgctxt "It is a directory access bit - "
 msgid "Sticky"
 msgstr "لاصق"
 
@@ -305,7 +301,8 @@ msgid "Sticky & set GID"
 msgstr "لاصق وعيّن GID"
 
 #: ../data/ui/file-prop.glade.h:35
-msgctxt "this is a file access mode bit, also known as 'suid'"
+#, fuzzy
+msgctxt "this is a file access mode bit, also known as "
 msgid "Set UID"
 msgstr "عيّن UID"
 
@@ -543,43 +540,43 @@ msgstr "<b>الوقت المتبقّي:</b>"
 msgid "<b>Errors occurred:</b>"
 msgstr "<b>الأخطاء الّتي حدثت:</b>"
 
-#: ../src/base/fm-action.c:272
+#: ../src/base/fm-action.c:273
 #, fuzzy
 msgid "Empty value"
 msgstr "ملفّ فارغ"
 
-#: ../src/base/fm-action.c:280
+#: ../src/base/fm-action.c:281
 #, fuzzy
 msgid "Invalid selection"
 msgstr "الوجهة غير صالحة"
 
 #. ---- GFile implementation ----
-#: ../src/base/fm-action.c:807 ../src/job/fm-file-ops-job.c:271
+#: ../src/base/fm-action.c:795 ../src/job/fm-file-ops-job.c:271
 #: ../src/modules/vfs-menu.c:1176 ../src/modules/vfs-search.c:928
 msgid "Operation not supported"
 msgstr "العمليّة غير مدعومة"
 
-#: ../src/base/fm-file-launcher.c:87
+#: ../src/base/fm-file-launcher.c:88
 #, c-format
 msgid "Invalid desktop entry file: '%s'"
 msgstr "ملفّ مدخلة سطح المكتب غير صالح: '%s'"
 
-#: ../src/base/fm-file-launcher.c:253 ../src/base/fm-file-launcher.c:407
+#: ../src/base/fm-file-launcher.c:255 ../src/base/fm-file-launcher.c:409
 #, c-format
 msgid "Could not determine content type of file '%s' to launch it"
 msgstr "تعذّر تحديد نوع محتوى الملفّ '%s' لإطلاقه"
 
-#: ../src/base/fm-file-launcher.c:292
+#: ../src/base/fm-file-launcher.c:294
 #, c-format
 msgid "No default application is set to launch URIs %s://"
 msgstr "لا تطبيق افتراضيّ معيّن لإطلاق معرّفات URI ‏‎%s‎‎:‎‎/‎/‎"
 
-#: ../src/base/fm-file-launcher.c:360
+#: ../src/base/fm-file-launcher.c:362
 #, c-format
 msgid "Cannot set working directory to '%s': %s"
 msgstr "تعذّر تعيين دليل العمل إلى '%s': ‏%s"
 
-#: ../src/base/fm-file-launcher.c:454 ../src/base/fm-templates.c:1104
+#: ../src/base/fm-file-launcher.c:456 ../src/base/fm-templates.c:1104
 #, c-format
 msgid "No default application is set for MIME type %s"
 msgstr "لا تطبيق افتراضي معيّن لنوع MIME ‏%s هذا"
@@ -1633,166 +1630,125 @@ msgstr "اسم الملفّ الناتج"
 msgid "RESULT"
 msgstr "النّاتج"
 
-#. Translator: The word "blank" is used as an adjective, e.g. we are decsribing discs that are already blank
-#: ../src/udisks/g-udisks-device.c:41
-msgid "CD-ROM Disc"
-msgstr "قرص CD-ROM"
+#~ msgid "CD-ROM Disc"
+#~ msgstr "قرص CD-ROM"
 
-#: ../src/udisks/g-udisks-device.c:41
-msgid "Blank CD-ROM Disc"
-msgstr "قرص CD-ROM فارغ"
+#~ msgid "Blank CD-ROM Disc"
+#~ msgstr "قرص CD-ROM فارغ"
 
-#: ../src/udisks/g-udisks-device.c:42
-msgid "CD-R Disc"
-msgstr "قرص CD-R"
+#~ msgid "CD-R Disc"
+#~ msgstr "قرص CD-R"
 
-#: ../src/udisks/g-udisks-device.c:42
-msgid "Blank CD-R Disc"
-msgstr "قرص CD-R فارغ"
+#~ msgid "Blank CD-R Disc"
+#~ msgstr "قرص CD-R فارغ"
 
-#: ../src/udisks/g-udisks-device.c:43
-msgid "CD-RW Disc"
-msgstr "قرص CD-RW"
+#~ msgid "CD-RW Disc"
+#~ msgstr "قرص CD-RW"
 
-#: ../src/udisks/g-udisks-device.c:43
-msgid "Blank CD-RW Disc"
-msgstr "قرص CD-RW فارغ"
+#~ msgid "Blank CD-RW Disc"
+#~ msgstr "قرص CD-RW فارغ"
 
-#: ../src/udisks/g-udisks-device.c:44 ../src/udisks/g-udisks-device.c:45
-msgid "DVD-ROM Disc"
-msgstr "قرص DVD-ROM"
+#~ msgid "DVD-ROM Disc"
+#~ msgstr "قرص DVD-ROM"
 
-#: ../src/udisks/g-udisks-device.c:44 ../src/udisks/g-udisks-device.c:45
-msgid "Blank DVD-ROM Disc"
-msgstr "قرص DVD-ROM فارغ"
+#~ msgid "Blank DVD-ROM Disc"
+#~ msgstr "قرص DVD-ROM فارغ"
 
-#: ../src/udisks/g-udisks-device.c:46
-msgid "DVD-RW Disc"
-msgstr "قرص DVD-RW"
+#~ msgid "DVD-RW Disc"
+#~ msgstr "قرص DVD-RW"
 
-#: ../src/udisks/g-udisks-device.c:46
-msgid "Blank DVD-RW Disc"
-msgstr "قرص DVD-RW فارغ"
+#~ msgid "Blank DVD-RW Disc"
+#~ msgstr "قرص DVD-RW فارغ"
 
-#: ../src/udisks/g-udisks-device.c:47
-msgid "DVD-RAM Disc"
-msgstr "قرص DVD-RAM"
+#~ msgid "DVD-RAM Disc"
+#~ msgstr "قرص DVD-RAM"
 
-#: ../src/udisks/g-udisks-device.c:47
-msgid "Blank DVD-RAM Disc"
-msgstr "قرص DVD-RAM فارغ"
+#~ msgid "Blank DVD-RAM Disc"
+#~ msgstr "قرص DVD-RAM فارغ"
 
-#: ../src/udisks/g-udisks-device.c:48
-msgid "DVD+R Disc"
-msgstr "قرص DVD+R"
+#~ msgid "DVD+R Disc"
+#~ msgstr "قرص DVD+R"
 
-#: ../src/udisks/g-udisks-device.c:48
-msgid "Blank DVD+R Disc"
-msgstr "قرص DVD+R فارغ"
+#~ msgid "Blank DVD+R Disc"
+#~ msgstr "قرص DVD+R فارغ"
 
-#: ../src/udisks/g-udisks-device.c:49
-msgid "DVD+RW Disc"
-msgstr "قرص DVD+RW"
+#~ msgid "DVD+RW Disc"
+#~ msgstr "قرص DVD+RW"
 
-#: ../src/udisks/g-udisks-device.c:49
-msgid "Blank DVD+RW Disc"
-msgstr "قرص DVD+RW فارغ"
+#~ msgid "Blank DVD+RW Disc"
+#~ msgstr "قرص DVD+RW فارغ"
 
-#: ../src/udisks/g-udisks-device.c:50
-msgid "DVD+R DL Disc"
-msgstr "قرص DVD+R DL"
+#~ msgid "DVD+R DL Disc"
+#~ msgstr "قرص DVD+R DL"
 
-#: ../src/udisks/g-udisks-device.c:50
-msgid "Blank DVD+R DL Disc"
-msgstr "قرص DVD+R DL فارغ"
+#~ msgid "Blank DVD+R DL Disc"
+#~ msgstr "قرص DVD+R DL فارغ"
 
-#: ../src/udisks/g-udisks-device.c:51
-msgid "DVD+RW DL Disc"
-msgstr "قرص DVD+RW DL"
+#~ msgid "DVD+RW DL Disc"
+#~ msgstr "قرص DVD+RW DL"
 
-#: ../src/udisks/g-udisks-device.c:51
-msgid "Blank DVD+RW DL Disc"
-msgstr "قرص DVD+RW DL فارغ"
+#~ msgid "Blank DVD+RW DL Disc"
+#~ msgstr "قرص DVD+RW DL فارغ"
 
-#: ../src/udisks/g-udisks-device.c:52
-msgid "Blu-Ray Disc"
-msgstr "قرص Blu-Ray"
+#~ msgid "Blu-Ray Disc"
+#~ msgstr "قرص Blu-Ray"
 
-#: ../src/udisks/g-udisks-device.c:52
-msgid "Blank Blu-Ray Disc"
-msgstr "قرص Blu-Ray فارغ"
+#~ msgid "Blank Blu-Ray Disc"
+#~ msgstr "قرص Blu-Ray فارغ"
 
-#: ../src/udisks/g-udisks-device.c:53
-msgid "Blu-Ray R Disc"
-msgstr "قرص Blu-Ray R"
+#~ msgid "Blu-Ray R Disc"
+#~ msgstr "قرص Blu-Ray R"
 
-#: ../src/udisks/g-udisks-device.c:53
-msgid "Blank Blu-Ray R Disc"
-msgstr "قرص Blu-Ray R فارغ"
+#~ msgid "Blank Blu-Ray R Disc"
+#~ msgstr "قرص Blu-Ray R فارغ"
 
-#: ../src/udisks/g-udisks-device.c:54
-msgid "Blu-Ray RW Disc"
-msgstr "قرص Blu-Ray RW"
+#~ msgid "Blu-Ray RW Disc"
+#~ msgstr "قرص Blu-Ray RW"
 
-#: ../src/udisks/g-udisks-device.c:54
-msgid "Blank Blu-Ray RW Disc"
-msgstr "قرص Blu-Ray RW فارغ"
+#~ msgid "Blank Blu-Ray RW Disc"
+#~ msgstr "قرص Blu-Ray RW فارغ"
 
-#: ../src/udisks/g-udisks-device.c:55
-msgid "HD DVD Disc"
-msgstr "قرص HD DVD"
+#~ msgid "HD DVD Disc"
+#~ msgstr "قرص HD DVD"
 
-#: ../src/udisks/g-udisks-device.c:55
-msgid "Blank HD DVD Disc"
-msgstr "قرص HD DVD فارغ"
+#~ msgid "Blank HD DVD Disc"
+#~ msgstr "قرص HD DVD فارغ"
 
-#: ../src/udisks/g-udisks-device.c:56
-msgid "HD DVD-R Disc"
-msgstr "قرص HD DVD-R"
+#~ msgid "HD DVD-R Disc"
+#~ msgstr "قرص HD DVD-R"
 
-#: ../src/udisks/g-udisks-device.c:56
-msgid "Blank HD DVD-R Disc"
-msgstr "قرص HD DVD-R فارغ"
+#~ msgid "Blank HD DVD-R Disc"
+#~ msgstr "قرص HD DVD-R فارغ"
 
-#: ../src/udisks/g-udisks-device.c:57
-msgid "HD DVD-RW Disc"
-msgstr "قرص HD DVD-RW"
+#~ msgid "HD DVD-RW Disc"
+#~ msgstr "قرص HD DVD-RW"
 
-#: ../src/udisks/g-udisks-device.c:57
-msgid "Blank HD DVD-RW Disc"
-msgstr "قرص HD DVD-RW فارغ"
+#~ msgid "Blank HD DVD-RW Disc"
+#~ msgstr "قرص HD DVD-RW فارغ"
 
-#: ../src/udisks/g-udisks-device.c:58
-msgid "MO Disc"
-msgstr "قرص MO"
+#~ msgid "MO Disc"
+#~ msgstr "قرص MO"
 
-#: ../src/udisks/g-udisks-device.c:58
-msgid "Blank MO Disc"
-msgstr "قرص MO فارغ"
+#~ msgid "Blank MO Disc"
+#~ msgstr "قرص MO فارغ"
 
-#: ../src/udisks/g-udisks-device.c:59
-msgid "MRW Disc"
-msgstr "قرص MRW"
+#~ msgid "MRW Disc"
+#~ msgstr "قرص MRW"
 
-#: ../src/udisks/g-udisks-device.c:59
-msgid "Blank MRW Disc"
-msgstr "قرص MRW فارغ"
+#~ msgid "Blank MRW Disc"
+#~ msgstr "قرص MRW فارغ"
 
-#: ../src/udisks/g-udisks-device.c:60
-msgid "MRW/W Disc"
-msgstr "قرص MRW/W"
+#~ msgid "MRW/W Disc"
+#~ msgstr "قرص MRW/W"
 
-#: ../src/udisks/g-udisks-device.c:60
-msgid "Blank MRW/W Disc"
-msgstr "قرص MRW/W فارغ"
+#~ msgid "Blank MRW/W Disc"
+#~ msgstr "قرص MRW/W فارغ"
 
-#: ../src/udisks/g-udisks-device.c:299
-msgid "Blank Optical Disc"
-msgstr "قرص ضوئيّ فارغ"
+#~ msgid "Blank Optical Disc"
+#~ msgstr "قرص ضوئيّ فارغ"
 
-#: ../src/udisks/g-udisks-device.c:301
-msgid "Optical Disc"
-msgstr "قرص ضوئيّ"
+#~ msgid "Optical Disc"
+#~ msgstr "قرص ضوئيّ"
 
 #, fuzzy
 #~ msgid "<b>File type to be opened:</b>"

@@ -39,10 +39,6 @@
 #include "actions/fm-actions.h"
 #endif
 
-#ifdef USE_UDISKS
-#include "udisks/fm-udisks.h"
-#endif
-
 GQuark fm_qdata_id = 0;
 
 /**
@@ -103,12 +99,6 @@ gboolean fm_init(FmConfig* config)
         fm_config_load_from_file(fm_config, NULL);
     }
 
-#ifdef USE_UDISKS
-    /* extension point should be added before any other GIO monitor call
-       otherwise it will be ignored by GIO because GIO initializes it once */
-    _fm_udisks_init();
-#endif
-
     _fm_file_init();
     _fm_path_init();
     _fm_icon_init();
@@ -165,10 +155,6 @@ void fm_finalize(void)
     _fm_icon_finalize();
     _fm_path_finalize();
     _fm_file_finalize();
-
-#ifdef USE_UDISKS
-    _fm_udisks_finalize();
-#endif
 
     /* fm_config_save(fm_config, _fm_config_get_name(fm_config)); */
     g_object_unref(fm_config);

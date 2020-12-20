@@ -79,14 +79,6 @@ IGNORE_HFILES= \
 	fm-gtk-marshal.h \
 	main-win.h \
 	dbus-utils.h \
-	fm-udisks.h \
-	g-udisks-device.h \
-	g-udisks-drive.h \
-	g-udisks-mount.h \
-	g-udisks-volume.h \
-	g-udisks-volume-monitor.h \
-	udisks-device.h \
-	udisks.h \
 	fm-app-lookup.h \
 	exo-icon-view.h \
 	exo-marshal.h \

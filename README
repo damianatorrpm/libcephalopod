@@ -23,13 +23,9 @@ Notes for runtime environment:
    if you need these features.
 
 3. Volume management is done with glib, which relies on gvfs.
-   If you don't want to use gvfs, try the --enable-udisks configure option.
-   Libfm has a built-in volume management implementation done with udisks.
-   However, it's still experimental and may be unstable.
-   Use gvfs whenever possible.
 
 4. If you're using Linux, mounting volumes without root privileges is
-   supported by gvfs and udisks, given you have correct policy-kit
+   supported by gvfs, given you have correct policy-kit
    configurations. If you have problems mounting/unmounting devices,
    check your policykit configurations. Either your permission settings
    are wrong, or there is no policykit agent running. There must be 

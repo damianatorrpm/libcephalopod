@@ -90,7 +90,6 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-#include "gtk-compat.h"
 
 #include "fm-dnd-dest.h"
 #include "fm-gtk-utils.h"

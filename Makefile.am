@@ -30,7 +30,6 @@ SUBDIRS = $(DIST_SUBDIRS)
 EXTRA_DIST += \
 	libfm.pc.in \
 	libfm-extra.pc.in \
-	libfm-gtk.pc.in \
 	libfm-gtk3.pc.in \
 	po/libfm.pot \
 	$(NULL)

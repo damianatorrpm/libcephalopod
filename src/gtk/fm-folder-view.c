@@ -83,7 +83,6 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-#include "gtk-compat.h"
 
 #include <glib/gi18n-lib.h>
 #include <stdlib.h>
@@ -1091,77 +1090,6 @@ static void on_file_prop(GtkAction* act, FmFolderView* fv)
     }
 }
 
-static void popup_position_func(GtkMenu *menu, gint *x, gint *y,
-                                gboolean *push_in, gpointer user_data)
-{
-    GtkWidget *widget = GTK_WIDGET(user_data);
-    GdkWindow *parent_window;
-    GdkScreen *screen;
-    GtkAllocation a, ma;
-    GdkRectangle mr;
-    gint x2, y2, mon;
-    gboolean rtl = (gtk_widget_get_direction(widget) == GTK_TEXT_DIR_RTL);
-
-    /* realize menu so we get actual size of it */
-    gtk_widget_realize(GTK_WIDGET(menu));
-    /* get all the relative coordinates */
-    gtk_widget_get_allocation(widget, &a);
-    screen = gtk_widget_get_screen(widget);
-    gdk_window_get_device_position(gtk_widget_get_window(widget),
-                                   gdk_device_manager_get_client_pointer(
-                                        gdk_display_get_device_manager(
-                                            gdk_screen_get_display(screen))),
-                                   &x2, &y2, NULL);
-    gtk_widget_get_allocation(GTK_WIDGET(menu), &ma);
-    parent_window = gtk_widget_get_parent_window(widget);
-    /* get absolute coordinate of parent window - we got coords relative to it */
-    if (parent_window)
-        gdk_window_get_origin(parent_window, x, y);
-    else
-    {
-        /* desktop has no parent window so parent coords will be from geom */
-        mon = gdk_screen_get_monitor_at_window(screen, gtk_widget_get_window(widget));
-        gdk_screen_get_monitor_geometry(screen, mon, &mr);
-        *x = mr.x;
-        *y = mr.y;
-    }
-    /* position menu inside widget */
-    if(rtl) /* RTL */
-        x2 = CLAMP(x2, a.x + 1, a.x + ma.width + a.width - 1);
-    else /* LTR */
-        x2 = CLAMP(x2, a.x + 1 - ma.width, a.x + a.width - 1);
-    y2 = CLAMP(y2, a.y + 1 - ma.height, a.y + a.height - 1);
-    /* calculate desired position for menu */
-    *x += x2;
-    *y += y2;
-    /* get monitor geometry at the pointer: for desktop we already have it */
-    if (parent_window)
-    {
-        mon = gdk_screen_get_monitor_at_point(screen, *x, *y);
-        gdk_screen_get_monitor_geometry(screen, mon, &mr);
-    }
-    /* limit coordinates so menu will be not positioned outside of screen */
-    if(rtl) /* RTL */
-    {
-        x2 = mr.x + mr.width;
-        if (*x < mr.x + ma.width) /* out of monitor */
-            *x = MIN(*x + ma.width, x2); /* place menu right to cursor */
-        else
-            *x = MIN(*x, x2);
-    }
-    else /* LTR */
-    {
-        if (*x + ma.width > mr.x + mr.width) /* out of monitor */
-            *x = MAX(mr.x, *x - ma.width); /* place menu left to cursor */
-        else
-            *x = MAX(mr.x, *x); /* place menu right to cursor */
-    }
-    if (*y + ma.height > mr.y + mr.height) /* out of monitor */
-        *y = MAX(mr.y, *y - ma.height); /* place menu above cursor */
-    else
-        *y = MAX(mr.y, *y); /* place menu below cursor */
-}
-
 static void on_menu(GtkAction* act, FmFolderView* fv)
 {
     GtkUIManager *ui = g_object_get_qdata(G_OBJECT(fv), ui_quark);
@@ -1283,12 +1211,7 @@ static void on_menu(GtkAction* act, FmFolderView* fv)
 
     /* open popup */
     gtk_ui_manager_ensure_update(ui);
-#if GTK_CHECK_VERSION(3, 22, 0)
     gtk_menu_popup_at_pointer(popup, NULL);
-#else
-    gtk_menu_popup(popup, NULL, NULL, popup_position_func, fv, 3,
-                   gtk_get_current_event_time());
-#endif
 }
 
 /* handle 'Menu' and 'Shift+F10' here */
@@ -1401,12 +1324,7 @@ static void on_file_menu(GtkAction* act, FmFolderView* fv)
         iface->get_custom_menu_callbacks(fv, &update_popup, &open_folders);
         popup = _make_file_menu(fv, win, update_popup, open_folders, files);
         fm_file_info_list_unref(files);
-#if GTK_CHECK_VERSION(3, 22, 0)
         gtk_menu_popup_at_pointer(popup, NULL);
-#else
-        gtk_menu_popup(popup, NULL, NULL, popup_position_func, fv, 3,
-                       gtk_get_current_event_time());
-#endif
     }
 }
 
@@ -1785,12 +1703,7 @@ void fm_folder_view_item_clicked(FmFolderView* fv, GtkTreePath* path,
             files = iface->dup_selected_files(fv);
             popup = _make_file_menu(fv, win, update_popup, open_folders, files);
             fm_file_info_list_unref(files);
-#if GTK_CHECK_VERSION(3, 22, 0)
             gtk_menu_popup_at_pointer(popup, NULL);
-#else
-            gtk_menu_popup(popup, NULL, NULL, popup_position_func, fv, 3,
-                           gtk_get_current_event_time());
-#endif
         }
         else /* no files are selected. Show context menu of current folder. */
             on_menu(NULL, fv);

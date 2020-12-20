@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libfm 1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-13 00:10+0300\n"
+"POT-Creation-Date: 2020-12-20 10:39+0100\n"
 "PO-Revision-Date: 2019-02-22 09:18+0000\n"
 "Last-Translator: Miguel Anxo Bouzada <mbouzada@gmail.com>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
@@ -52,20 +52,17 @@ msgstr "Aplicativos _instalados"
 msgid "<b>C_ommand line to execute:</b>"
 msgstr "<b>Liña de _ordes a executar:</b>"
 
-#: ../data/ui/app-chooser.glade.h:5
-#: ../src/modules/gtk-fileprop-x-desktop.c:275
+#: ../data/ui/app-chooser.glade.h:5 ../src/modules/gtk-fileprop-x-desktop.c:275
 msgid "_Browse..."
 msgstr "_Examinar..."
 
 #. row 1: "Terminal" GtkCheckButton
-#: ../data/ui/app-chooser.glade.h:6
-#: ../src/modules/gtk-fileprop-x-desktop.c:294
+#: ../data/ui/app-chooser.glade.h:6 ../src/modules/gtk-fileprop-x-desktop.c:294
 msgid "_Execute in terminal emulator"
 msgstr "E_xecutar nun emulador de terminal"
 
 #. row 2: "X-KeepTerminal" GtkCheckButton
-#: ../data/ui/app-chooser.glade.h:7
-#: ../src/modules/gtk-fileprop-x-desktop.c:306
+#: ../data/ui/app-chooser.glade.h:7 ../src/modules/gtk-fileprop-x-desktop.c:306
 msgid "_Keep terminal window open after command execution"
 msgstr "_Manter aberta a xanela do terminal despois da execución da orde"
 
@@ -292,9 +289,7 @@ msgid "None"
 msgstr "Ningunha"
 
 #: ../data/ui/file-prop.glade.h:32
-msgctxt ""
-"It is a directory access bit - 'sticky' - where only owner can delete a file "
-"from it"
+msgctxt "It is a directory access bit - "
 msgid "Sticky"
 msgstr "Persistente"
 
@@ -307,7 +302,7 @@ msgid "Sticky & set GID"
 msgstr "Persistente e Estabelecer o GID"
 
 #: ../data/ui/file-prop.glade.h:35
-msgctxt "this is a file access mode bit, also known as 'suid'"
+msgctxt "this is a file access mode bit, also known as "
 msgid "Set UID"
 msgstr "Estabelecer o UID"
 
@@ -546,43 +541,43 @@ msgstr "<b>Tempo restante:</b>"
 msgid "<b>Errors occurred:</b>"
 msgstr "<b>Producíronse algúns erros:</b>"
 
-#: ../src/base/fm-action.c:272
+#: ../src/base/fm-action.c:273
 msgid "Empty value"
 msgstr "Valor baleiro"
 
-#: ../src/base/fm-action.c:280
+#: ../src/base/fm-action.c:281
 msgid "Invalid selection"
 msgstr "Selección incorrecta"
 
 #. ---- GFile implementation ----
-#: ../src/base/fm-action.c:807 ../src/job/fm-file-ops-job.c:271
+#: ../src/base/fm-action.c:795 ../src/job/fm-file-ops-job.c:271
 #: ../src/modules/vfs-menu.c:1176 ../src/modules/vfs-search.c:928
 msgid "Operation not supported"
 msgstr "Operación non admitida"
 
-#: ../src/base/fm-file-launcher.c:87
+#: ../src/base/fm-file-launcher.c:88
 #, c-format
 msgid "Invalid desktop entry file: '%s'"
 msgstr "Elemento de menú incorrecto: «%s»"
 
-#: ../src/base/fm-file-launcher.c:253 ../src/base/fm-file-launcher.c:407
+#: ../src/base/fm-file-launcher.c:255 ../src/base/fm-file-launcher.c:409
 #, c-format
 msgid "Could not determine content type of file '%s' to launch it"
 msgstr ""
 "Non foi posíbel determinar o tipo de contido do ficheiro «%s» para inicialo"
 
-#: ../src/base/fm-file-launcher.c:292
+#: ../src/base/fm-file-launcher.c:294
 #, c-format
 msgid "No default application is set to launch URIs %s://"
 msgstr ""
 "Non está estabelecido o aplicativo predeterminado para iniciar as URI %s://"
 
-#: ../src/base/fm-file-launcher.c:360
+#: ../src/base/fm-file-launcher.c:362
 #, c-format
 msgid "Cannot set working directory to '%s': %s"
 msgstr "Non é posíbel estabelecer o directorio de traballo a «%s»: %s"
 
-#: ../src/base/fm-file-launcher.c:454 ../src/base/fm-templates.c:1104
+#: ../src/base/fm-file-launcher.c:456 ../src/base/fm-templates.c:1104
 #, c-format
 msgid "No default application is set for MIME type %s"
 msgstr "Non está estabelecido o aplicativo predeterminado para o tipo MIME %s"
@@ -1627,180 +1622,141 @@ msgstr "nome do ficheiro resultante"
 msgid "RESULT"
 msgstr "RESULTANTE"
 
-#. Translator: The word "blank" is used as an adjective, e.g. we are decsribing discs that are already blank
-#: ../src/udisks/g-udisks-device.c:41
-msgid "CD-ROM Disc"
-msgstr "RESULTANTE"
+#~ msgctxt ""
+#~ "It is a directory access bit - 'sticky' - where only owner can delete a "
+#~ "file from it"
+#~ msgid "Sticky"
+#~ msgstr "Persistente"
 
-#: ../src/udisks/g-udisks-device.c:41
-msgid "Blank CD-ROM Disc"
-msgstr "Disco CD-ROM baleiro"
+#~ msgctxt "this is a file access mode bit, also known as 'suid'"
+#~ msgid "Set UID"
+#~ msgstr "Estabelecer o UID"
 
-#: ../src/udisks/g-udisks-device.c:42
-msgid "CD-R Disc"
-msgstr "Disco CD-R"
+#~ msgid "CD-ROM Disc"
+#~ msgstr "RESULTANTE"
 
-#: ../src/udisks/g-udisks-device.c:42
-msgid "Blank CD-R Disc"
-msgstr "Disco CD-R baleiro"
+#~ msgid "Blank CD-ROM Disc"
+#~ msgstr "Disco CD-ROM baleiro"
 
-#: ../src/udisks/g-udisks-device.c:43
-msgid "CD-RW Disc"
-msgstr "Disco CD-RW"
+#~ msgid "CD-R Disc"
+#~ msgstr "Disco CD-R"
 
-#: ../src/udisks/g-udisks-device.c:43
-msgid "Blank CD-RW Disc"
-msgstr "Disco CD-RW baleiro"
+#~ msgid "Blank CD-R Disc"
+#~ msgstr "Disco CD-R baleiro"
 
-#: ../src/udisks/g-udisks-device.c:44 ../src/udisks/g-udisks-device.c:45
-msgid "DVD-ROM Disc"
-msgstr "Disco DVD-ROM"
+#~ msgid "CD-RW Disc"
+#~ msgstr "Disco CD-RW"
 
-#: ../src/udisks/g-udisks-device.c:44 ../src/udisks/g-udisks-device.c:45
-msgid "Blank DVD-ROM Disc"
-msgstr "Disco DVD-ROM baleiro"
+#~ msgid "Blank CD-RW Disc"
+#~ msgstr "Disco CD-RW baleiro"
 
-#: ../src/udisks/g-udisks-device.c:46
-msgid "DVD-RW Disc"
-msgstr "Disco DVD-RW"
+#~ msgid "DVD-ROM Disc"
+#~ msgstr "Disco DVD-ROM"
 
-#: ../src/udisks/g-udisks-device.c:46
-msgid "Blank DVD-RW Disc"
-msgstr "Disco DVD-RW baleiro"
+#~ msgid "Blank DVD-ROM Disc"
+#~ msgstr "Disco DVD-ROM baleiro"
 
-#: ../src/udisks/g-udisks-device.c:47
-msgid "DVD-RAM Disc"
-msgstr "Disco DVD-RAM"
+#~ msgid "DVD-RW Disc"
+#~ msgstr "Disco DVD-RW"
 
-#: ../src/udisks/g-udisks-device.c:47
-msgid "Blank DVD-RAM Disc"
-msgstr "Disco DVD-RAM baleiro"
+#~ msgid "Blank DVD-RW Disc"
+#~ msgstr "Disco DVD-RW baleiro"
 
-#: ../src/udisks/g-udisks-device.c:48
-msgid "DVD+R Disc"
-msgstr "Disco DVD+R"
+#~ msgid "DVD-RAM Disc"
+#~ msgstr "Disco DVD-RAM"
 
-#: ../src/udisks/g-udisks-device.c:48
-msgid "Blank DVD+R Disc"
-msgstr "Disco DVD+R baleiro"
+#~ msgid "Blank DVD-RAM Disc"
+#~ msgstr "Disco DVD-RAM baleiro"
 
-#: ../src/udisks/g-udisks-device.c:49
-msgid "DVD+RW Disc"
-msgstr "Disco DVD+RW"
+#~ msgid "DVD+R Disc"
+#~ msgstr "Disco DVD+R"
 
-#: ../src/udisks/g-udisks-device.c:49
-msgid "Blank DVD+RW Disc"
-msgstr "Disco DVD+RW baleiro"
+#~ msgid "Blank DVD+R Disc"
+#~ msgstr "Disco DVD+R baleiro"
 
-#: ../src/udisks/g-udisks-device.c:50
-msgid "DVD+R DL Disc"
-msgstr "Disco DVD+R DL"
+#~ msgid "DVD+RW Disc"
+#~ msgstr "Disco DVD+RW"
 
-#: ../src/udisks/g-udisks-device.c:50
-msgid "Blank DVD+R DL Disc"
-msgstr "Disco DVD+R DL baleiro"
+#~ msgid "Blank DVD+RW Disc"
+#~ msgstr "Disco DVD+RW baleiro"
 
-#: ../src/udisks/g-udisks-device.c:51
-msgid "DVD+RW DL Disc"
-msgstr "Disco DVD+RW DL"
+#~ msgid "DVD+R DL Disc"
+#~ msgstr "Disco DVD+R DL"
 
-#: ../src/udisks/g-udisks-device.c:51
-msgid "Blank DVD+RW DL Disc"
-msgstr "Disco DVD+RW DL baleiro"
+#~ msgid "Blank DVD+R DL Disc"
+#~ msgstr "Disco DVD+R DL baleiro"
 
-#: ../src/udisks/g-udisks-device.c:52
-msgid "Blu-Ray Disc"
-msgstr "Disco Blu-Ray"
+#~ msgid "DVD+RW DL Disc"
+#~ msgstr "Disco DVD+RW DL"
 
-#: ../src/udisks/g-udisks-device.c:52
-msgid "Blank Blu-Ray Disc"
-msgstr "Disco Blu-Ray baleiro"
+#~ msgid "Blank DVD+RW DL Disc"
+#~ msgstr "Disco DVD+RW DL baleiro"
 
-#: ../src/udisks/g-udisks-device.c:53
-msgid "Blu-Ray R Disc"
-msgstr "Disco Blu-Ray R"
+#~ msgid "Blu-Ray Disc"
+#~ msgstr "Disco Blu-Ray"
 
-#: ../src/udisks/g-udisks-device.c:53
-msgid "Blank Blu-Ray R Disc"
-msgstr "Disco Blu-Ray R baleiro"
+#~ msgid "Blank Blu-Ray Disc"
+#~ msgstr "Disco Blu-Ray baleiro"
 
-#: ../src/udisks/g-udisks-device.c:54
-msgid "Blu-Ray RW Disc"
-msgstr "Disco Blu-Ray RW"
+#~ msgid "Blu-Ray R Disc"
+#~ msgstr "Disco Blu-Ray R"
 
-#: ../src/udisks/g-udisks-device.c:54
-msgid "Blank Blu-Ray RW Disc"
-msgstr "Disco Blu-Ray RW baleiro"
+#~ msgid "Blank Blu-Ray R Disc"
+#~ msgstr "Disco Blu-Ray R baleiro"
 
-#: ../src/udisks/g-udisks-device.c:55
-msgid "HD DVD Disc"
-msgstr "Disco HD DVD"
+#~ msgid "Blu-Ray RW Disc"
+#~ msgstr "Disco Blu-Ray RW"
 
-#: ../src/udisks/g-udisks-device.c:55
-msgid "Blank HD DVD Disc"
-msgstr "Disco HD DVD baleiro"
+#~ msgid "Blank Blu-Ray RW Disc"
+#~ msgstr "Disco Blu-Ray RW baleiro"
 
-#: ../src/udisks/g-udisks-device.c:56
-msgid "HD DVD-R Disc"
-msgstr "Disco HD DVD-R"
+#~ msgid "HD DVD Disc"
+#~ msgstr "Disco HD DVD"
 
-#: ../src/udisks/g-udisks-device.c:56
-msgid "Blank HD DVD-R Disc"
-msgstr "Disco HD DVD-R baleiro"
+#~ msgid "Blank HD DVD Disc"
+#~ msgstr "Disco HD DVD baleiro"
 
-#: ../src/udisks/g-udisks-device.c:57
-msgid "HD DVD-RW Disc"
-msgstr "Disco HD DVD-RW"
+#~ msgid "HD DVD-R Disc"
+#~ msgstr "Disco HD DVD-R"
 
-#: ../src/udisks/g-udisks-device.c:57
-msgid "Blank HD DVD-RW Disc"
-msgstr "Disco HD DVD-RW baleiro"
+#~ msgid "Blank HD DVD-R Disc"
+#~ msgstr "Disco HD DVD-R baleiro"
 
-#: ../src/udisks/g-udisks-device.c:58
-msgid "MO Disc"
-msgstr "Disco MO"
+#~ msgid "HD DVD-RW Disc"
+#~ msgstr "Disco HD DVD-RW"
 
-#: ../src/udisks/g-udisks-device.c:58
-msgid "Blank MO Disc"
-msgstr "Disco MO baleiro"
+#~ msgid "Blank HD DVD-RW Disc"
+#~ msgstr "Disco HD DVD-RW baleiro"
 
-#: ../src/udisks/g-udisks-device.c:59
-msgid "MRW Disc"
-msgstr "Disco MRW"
+#~ msgid "MO Disc"
+#~ msgstr "Disco MO"
 
-#: ../src/udisks/g-udisks-device.c:59
-msgid "Blank MRW Disc"
-msgstr "Disco MRW baleiro"
+#~ msgid "Blank MO Disc"
+#~ msgstr "Disco MO baleiro"
 
-#: ../src/udisks/g-udisks-device.c:60
-msgid "MRW/W Disc"
-msgstr "Disco MRW/W"
+#~ msgid "MRW Disc"
+#~ msgstr "Disco MRW"
 
-#: ../src/udisks/g-udisks-device.c:60
-msgid "Blank MRW/W Disc"
-msgstr "Disco MRW/W baleiro"
+#~ msgid "Blank MRW Disc"
+#~ msgstr "Disco MRW baleiro"
 
-#: ../src/udisks/g-udisks-device.c:299
-msgid "Blank Optical Disc"
-msgstr "Disco óptico baleiro"
+#~ msgid "MRW/W Disc"
+#~ msgstr "Disco MRW/W"
 
-#: ../src/udisks/g-udisks-device.c:301
-msgid "Optical Disc"
-msgstr "Disco óptico"
+#~ msgid "Blank MRW/W Disc"
+#~ msgstr "Disco MRW/W baleiro"
+
+#~ msgid "Blank Optical Disc"
+#~ msgstr "Disco óptico baleiro"
+
+#~ msgid "Optical Disc"
+#~ msgstr "Disco óptico"
 
 #~ msgid "Symlinking"
 #~ msgstr "Facendo a ligazón simbólica"
 
 #~ msgid "*"
 #~ msgstr "*"
-
-#~ msgctxt "It is a directory access bit - "
-#~ msgid "Sticky"
-#~ msgstr "Persistente"
-
-#~ msgctxt "this is a file access mode bit, also known as "
-#~ msgid "Set UID"
-#~ msgstr "Estabelecer o UID"
 
 #~ msgid "Sticky"
 #~ msgstr "Persistente"

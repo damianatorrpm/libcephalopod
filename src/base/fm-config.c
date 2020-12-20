@@ -146,7 +146,6 @@ static void fm_config_init(FmConfig *self)
     self->show_thumbnail = FM_CONFIG_DEFAULT_SHOW_THUMBNAIL;
     self->thumbnail_local = FM_CONFIG_DEFAULT_THUMBNAIL_LOCAL;
     self->thumbnail_max = FM_CONFIG_DEFAULT_THUMBNAIL_MAX;
-    /* show_internal_volumes defaulted to FALSE */
     /* si_unit defaulted to FALSE */
     /* terminal and archiver defaulted to NULL */
     /* drop_default_action defaulted to 0 */
@@ -294,10 +293,6 @@ void fm_config_load_from_key_file(FmConfig* cfg, GKeyFile* kf)
     /* replace whitelist */
     g_strfreev(cfg->modules_whitelist);
     cfg->modules_whitelist = g_key_file_get_string_list(kf, "config", "modules_whitelist", NULL, NULL);
-
-#ifdef USE_UDISKS
-    fm_key_file_get_bool(kf, "config", "show_internal_volumes", &cfg->show_internal_volumes);
-#endif
 
     fm_key_file_get_int(kf, "ui", "big_icon_size", &cfg->big_icon_size);
     fm_key_file_get_int(kf, "ui", "small_icon_size", &cfg->small_icon_size);
@@ -496,9 +491,6 @@ void fm_config_save(FmConfig* cfg, const char* name)
                 _save_drop_action(str, cfg, drop_default_action);
                 _save_config_bool(str, cfg, defer_content_test);
                 _save_config_bool(str, cfg, quick_exec);
-#ifdef USE_UDISKS
-                _save_config_bool(str, cfg, show_internal_volumes);
-#endif
                 _save_config_string(str, cfg, terminal);
                 _save_config_string(str, cfg, archiver);
                 _save_config_string(str, cfg, format_cmd);

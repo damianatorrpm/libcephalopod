@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LibFM 1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-13 00:10+0300\n"
+"POT-Creation-Date: 2020-12-20 10:39+0100\n"
 "PO-Revision-Date: 2018-04-19 19:01+0000\n"
 "Last-Translator: Anari Jalakas <anari.jalakas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,20 +51,17 @@ msgstr "_Paigaldatud rakendus"
 msgid "<b>C_ommand line to execute:</b>"
 msgstr "<b>_Käivitatav käsurida:</b>"
 
-#: ../data/ui/app-chooser.glade.h:5
-#: ../src/modules/gtk-fileprop-x-desktop.c:275
+#: ../data/ui/app-chooser.glade.h:5 ../src/modules/gtk-fileprop-x-desktop.c:275
 msgid "_Browse..."
 msgstr "_Sirvi..."
 
 #. row 1: "Terminal" GtkCheckButton
-#: ../data/ui/app-chooser.glade.h:6
-#: ../src/modules/gtk-fileprop-x-desktop.c:294
+#: ../data/ui/app-chooser.glade.h:6 ../src/modules/gtk-fileprop-x-desktop.c:294
 msgid "_Execute in terminal emulator"
 msgstr "_Käivita terminalis"
 
 #. row 2: "X-KeepTerminal" GtkCheckButton
-#: ../data/ui/app-chooser.glade.h:7
-#: ../src/modules/gtk-fileprop-x-desktop.c:306
+#: ../data/ui/app-chooser.glade.h:7 ../src/modules/gtk-fileprop-x-desktop.c:306
 msgid "_Keep terminal window open after command execution"
 msgstr "_Terminali aken jääb pärast käsu täitmist avatuks"
 
@@ -288,9 +285,8 @@ msgid "None"
 msgstr "Ei midagi"
 
 #: ../data/ui/file-prop.glade.h:32
-msgctxt ""
-"It is a directory access bit - 'sticky' - where only owner can delete a file "
-"from it"
+#, fuzzy
+msgctxt "It is a directory access bit - "
 msgid "Sticky"
 msgstr "Kleepuv"
 
@@ -303,7 +299,8 @@ msgid "Sticky & set GID"
 msgstr "Kleepuv ja määratud GID"
 
 #: ../data/ui/file-prop.glade.h:35
-msgctxt "this is a file access mode bit, also known as 'suid'"
+#, fuzzy
+msgctxt "this is a file access mode bit, also known as "
 msgid "Set UID"
 msgstr "UID määramine"
 
@@ -541,42 +538,42 @@ msgstr "<b>Järelejäänud aeg:</b>"
 msgid "<b>Errors occurred:</b>"
 msgstr "<b>Tekkinud vead:</b>"
 
-#: ../src/base/fm-action.c:272
+#: ../src/base/fm-action.c:273
 msgid "Empty value"
 msgstr "Tühi väärtus"
 
-#: ../src/base/fm-action.c:280
+#: ../src/base/fm-action.c:281
 msgid "Invalid selection"
 msgstr "Vigane valik"
 
 #. ---- GFile implementation ----
-#: ../src/base/fm-action.c:807 ../src/job/fm-file-ops-job.c:271
+#: ../src/base/fm-action.c:795 ../src/job/fm-file-ops-job.c:271
 #: ../src/modules/vfs-menu.c:1176 ../src/modules/vfs-search.c:928
 msgid "Operation not supported"
 msgstr "Toimingut ei toetata"
 
-#: ../src/base/fm-file-launcher.c:87
+#: ../src/base/fm-file-launcher.c:88
 #, c-format
 msgid "Invalid desktop entry file: '%s'"
 msgstr "Vigane töölauakanne: '%s'"
 
-#: ../src/base/fm-file-launcher.c:253 ../src/base/fm-file-launcher.c:407
+#: ../src/base/fm-file-launcher.c:255 ../src/base/fm-file-launcher.c:409
 #, c-format
 msgid "Could not determine content type of file '%s' to launch it"
 msgstr ""
 "Faili '%s' sisutüüpi ei suudetud tuvastada, seetõttu pole võimalik seda avada"
 
-#: ../src/base/fm-file-launcher.c:292
+#: ../src/base/fm-file-launcher.c:294
 #, c-format
 msgid "No default application is set to launch URIs %s://"
 msgstr "Ükski rakendus ei ava vaikimisi %s:// URIsid"
 
-#: ../src/base/fm-file-launcher.c:360
+#: ../src/base/fm-file-launcher.c:362
 #, c-format
 msgid "Cannot set working directory to '%s': %s"
 msgstr "Töökataloogiks pole võimalik määrata '%s': %s"
 
-#: ../src/base/fm-file-launcher.c:454 ../src/base/fm-templates.c:1104
+#: ../src/base/fm-file-launcher.c:456 ../src/base/fm-templates.c:1104
 #, c-format
 msgid "No default application is set for MIME type %s"
 msgstr "MIME tüübi %s jaoks pole määratud vaikimisi rakendust"
@@ -1616,166 +1613,125 @@ msgstr "tulemuseks faili nimi"
 msgid "RESULT"
 msgstr "TULEMUS"
 
-#. Translator: The word "blank" is used as an adjective, e.g. we are decsribing discs that are already blank
-#: ../src/udisks/g-udisks-device.c:41
-msgid "CD-ROM Disc"
-msgstr "CD-ROM ketas"
+#~ msgid "CD-ROM Disc"
+#~ msgstr "CD-ROM ketas"
 
-#: ../src/udisks/g-udisks-device.c:41
-msgid "Blank CD-ROM Disc"
-msgstr "Tühi CD-ROM ketas"
+#~ msgid "Blank CD-ROM Disc"
+#~ msgstr "Tühi CD-ROM ketas"
 
-#: ../src/udisks/g-udisks-device.c:42
-msgid "CD-R Disc"
-msgstr "CD-R ketas"
+#~ msgid "CD-R Disc"
+#~ msgstr "CD-R ketas"
 
-#: ../src/udisks/g-udisks-device.c:42
-msgid "Blank CD-R Disc"
-msgstr "Tühi CD-R ketas"
+#~ msgid "Blank CD-R Disc"
+#~ msgstr "Tühi CD-R ketas"
 
-#: ../src/udisks/g-udisks-device.c:43
-msgid "CD-RW Disc"
-msgstr "CD-RW ketas"
+#~ msgid "CD-RW Disc"
+#~ msgstr "CD-RW ketas"
 
-#: ../src/udisks/g-udisks-device.c:43
-msgid "Blank CD-RW Disc"
-msgstr "Tühi CD-RW ketas"
+#~ msgid "Blank CD-RW Disc"
+#~ msgstr "Tühi CD-RW ketas"
 
-#: ../src/udisks/g-udisks-device.c:44 ../src/udisks/g-udisks-device.c:45
-msgid "DVD-ROM Disc"
-msgstr "DVD-ROM ketas"
+#~ msgid "DVD-ROM Disc"
+#~ msgstr "DVD-ROM ketas"
 
-#: ../src/udisks/g-udisks-device.c:44 ../src/udisks/g-udisks-device.c:45
-msgid "Blank DVD-ROM Disc"
-msgstr "Tühi DVD-ROM ketas"
+#~ msgid "Blank DVD-ROM Disc"
+#~ msgstr "Tühi DVD-ROM ketas"
 
-#: ../src/udisks/g-udisks-device.c:46
-msgid "DVD-RW Disc"
-msgstr "DVD-RW ketas"
+#~ msgid "DVD-RW Disc"
+#~ msgstr "DVD-RW ketas"
 
-#: ../src/udisks/g-udisks-device.c:46
-msgid "Blank DVD-RW Disc"
-msgstr "Tühi DVD-RW ketas"
+#~ msgid "Blank DVD-RW Disc"
+#~ msgstr "Tühi DVD-RW ketas"
 
-#: ../src/udisks/g-udisks-device.c:47
-msgid "DVD-RAM Disc"
-msgstr "DVD-RAM ketas"
+#~ msgid "DVD-RAM Disc"
+#~ msgstr "DVD-RAM ketas"
 
-#: ../src/udisks/g-udisks-device.c:47
-msgid "Blank DVD-RAM Disc"
-msgstr "Tühi DVD-RAM ketas"
+#~ msgid "Blank DVD-RAM Disc"
+#~ msgstr "Tühi DVD-RAM ketas"
 
-#: ../src/udisks/g-udisks-device.c:48
-msgid "DVD+R Disc"
-msgstr "DVD+R ketas"
+#~ msgid "DVD+R Disc"
+#~ msgstr "DVD+R ketas"
 
-#: ../src/udisks/g-udisks-device.c:48
-msgid "Blank DVD+R Disc"
-msgstr "Tühi DVD+R ketas"
+#~ msgid "Blank DVD+R Disc"
+#~ msgstr "Tühi DVD+R ketas"
 
-#: ../src/udisks/g-udisks-device.c:49
-msgid "DVD+RW Disc"
-msgstr "DVD+RW ketas"
+#~ msgid "DVD+RW Disc"
+#~ msgstr "DVD+RW ketas"
 
-#: ../src/udisks/g-udisks-device.c:49
-msgid "Blank DVD+RW Disc"
-msgstr "Tühi DVD+RW ketas"
+#~ msgid "Blank DVD+RW Disc"
+#~ msgstr "Tühi DVD+RW ketas"
 
-#: ../src/udisks/g-udisks-device.c:50
-msgid "DVD+R DL Disc"
-msgstr "DVD+R DL ketas"
+#~ msgid "DVD+R DL Disc"
+#~ msgstr "DVD+R DL ketas"
 
-#: ../src/udisks/g-udisks-device.c:50
-msgid "Blank DVD+R DL Disc"
-msgstr "Tühi DVD+R DL ketas"
+#~ msgid "Blank DVD+R DL Disc"
+#~ msgstr "Tühi DVD+R DL ketas"
 
-#: ../src/udisks/g-udisks-device.c:51
-msgid "DVD+RW DL Disc"
-msgstr "DVD+RW DL ketas"
+#~ msgid "DVD+RW DL Disc"
+#~ msgstr "DVD+RW DL ketas"
 
-#: ../src/udisks/g-udisks-device.c:51
-msgid "Blank DVD+RW DL Disc"
-msgstr "Tühi DVD+RW DL ketas"
+#~ msgid "Blank DVD+RW DL Disc"
+#~ msgstr "Tühi DVD+RW DL ketas"
 
-#: ../src/udisks/g-udisks-device.c:52
-msgid "Blu-Ray Disc"
-msgstr "Blu-Ray ketas"
+#~ msgid "Blu-Ray Disc"
+#~ msgstr "Blu-Ray ketas"
 
-#: ../src/udisks/g-udisks-device.c:52
-msgid "Blank Blu-Ray Disc"
-msgstr "Tühi Blu-Ray ketas"
+#~ msgid "Blank Blu-Ray Disc"
+#~ msgstr "Tühi Blu-Ray ketas"
 
-#: ../src/udisks/g-udisks-device.c:53
-msgid "Blu-Ray R Disc"
-msgstr "Blu-Ray R ketas"
+#~ msgid "Blu-Ray R Disc"
+#~ msgstr "Blu-Ray R ketas"
 
-#: ../src/udisks/g-udisks-device.c:53
-msgid "Blank Blu-Ray R Disc"
-msgstr "Tühi Blu-Ray R ketas"
+#~ msgid "Blank Blu-Ray R Disc"
+#~ msgstr "Tühi Blu-Ray R ketas"
 
-#: ../src/udisks/g-udisks-device.c:54
-msgid "Blu-Ray RW Disc"
-msgstr "Blu-Ray RW ketas"
+#~ msgid "Blu-Ray RW Disc"
+#~ msgstr "Blu-Ray RW ketas"
 
-#: ../src/udisks/g-udisks-device.c:54
-msgid "Blank Blu-Ray RW Disc"
-msgstr "Tühi Blu-Ray RW ketas"
+#~ msgid "Blank Blu-Ray RW Disc"
+#~ msgstr "Tühi Blu-Ray RW ketas"
 
-#: ../src/udisks/g-udisks-device.c:55
-msgid "HD DVD Disc"
-msgstr "HD DVD ketas"
+#~ msgid "HD DVD Disc"
+#~ msgstr "HD DVD ketas"
 
-#: ../src/udisks/g-udisks-device.c:55
-msgid "Blank HD DVD Disc"
-msgstr "Tühi HD DVD ketas"
+#~ msgid "Blank HD DVD Disc"
+#~ msgstr "Tühi HD DVD ketas"
 
-#: ../src/udisks/g-udisks-device.c:56
-msgid "HD DVD-R Disc"
-msgstr "HD DVD-R ketas"
+#~ msgid "HD DVD-R Disc"
+#~ msgstr "HD DVD-R ketas"
 
-#: ../src/udisks/g-udisks-device.c:56
-msgid "Blank HD DVD-R Disc"
-msgstr "Tühi HD DVD-R ketas"
+#~ msgid "Blank HD DVD-R Disc"
+#~ msgstr "Tühi HD DVD-R ketas"
 
-#: ../src/udisks/g-udisks-device.c:57
-msgid "HD DVD-RW Disc"
-msgstr "HD DVD-RW ketas"
+#~ msgid "HD DVD-RW Disc"
+#~ msgstr "HD DVD-RW ketas"
 
-#: ../src/udisks/g-udisks-device.c:57
-msgid "Blank HD DVD-RW Disc"
-msgstr "Tühi HD DVD-RW ketas"
+#~ msgid "Blank HD DVD-RW Disc"
+#~ msgstr "Tühi HD DVD-RW ketas"
 
-#: ../src/udisks/g-udisks-device.c:58
-msgid "MO Disc"
-msgstr "MO ketas"
+#~ msgid "MO Disc"
+#~ msgstr "MO ketas"
 
-#: ../src/udisks/g-udisks-device.c:58
-msgid "Blank MO Disc"
-msgstr "Tühi MO ketas"
+#~ msgid "Blank MO Disc"
+#~ msgstr "Tühi MO ketas"
 
-#: ../src/udisks/g-udisks-device.c:59
-msgid "MRW Disc"
-msgstr "MRW ketas"
+#~ msgid "MRW Disc"
+#~ msgstr "MRW ketas"
 
-#: ../src/udisks/g-udisks-device.c:59
-msgid "Blank MRW Disc"
-msgstr "Tühi MRW ketas"
+#~ msgid "Blank MRW Disc"
+#~ msgstr "Tühi MRW ketas"
 
-#: ../src/udisks/g-udisks-device.c:60
-msgid "MRW/W Disc"
-msgstr "MRW/W ketas"
+#~ msgid "MRW/W Disc"
+#~ msgstr "MRW/W ketas"
 
-#: ../src/udisks/g-udisks-device.c:60
-msgid "Blank MRW/W Disc"
-msgstr "Tühi MRW/W ketas"
+#~ msgid "Blank MRW/W Disc"
+#~ msgstr "Tühi MRW/W ketas"
 
-#: ../src/udisks/g-udisks-device.c:299
-msgid "Blank Optical Disc"
-msgstr "Tühi optiline ketas"
+#~ msgid "Blank Optical Disc"
+#~ msgstr "Tühi optiline ketas"
 
-#: ../src/udisks/g-udisks-device.c:301
-msgid "Optical Disc"
-msgstr "Optiline ketas"
+#~ msgid "Optical Disc"
+#~ msgstr "Optiline ketas"
 
 #~ msgid "*"
 #~ msgstr "*"

@@ -38,7 +38,6 @@
 
 #include <stdlib.h>
 #include <glib/gi18n-lib.h>
-#include "glib-compat.h"
 
 #include "fm.h"
 #include "fm-standard-view.h"

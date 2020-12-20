@@ -101,7 +101,6 @@ static GAppInfo* app_info_create_from_commandline(const char *commandline,
         char *filename = NULL;
         int fd;
 
-#if GLIB_CHECK_VERSION(2, 37, 6)
         if (mime_type && application_name[0])
         {
             /* SF bug #871: new GLib has ids cached so we do a trick here:
@@ -120,7 +119,6 @@ static GAppInfo* app_info_create_from_commandline(const char *commandline,
         if (filename)
             fd = g_open(filename, O_RDWR, 0);
         else
-#endif
         {
             filename = g_strdup_printf ("%s/userapp-%s-XXXXXX.desktop", dirname, app_basename);
             fd = g_mkstemp (filename);
@@ -539,11 +537,7 @@ GAppInfo* fm_choose_app_for_mime_type(GtkWindow* parent, FmMimeType* mime_type, 
             GError* err = NULL;
             /* add this app to the mime-type */
 
-#if GLIB_CHECK_VERSION(2, 27, 6)
             if(!g_app_info_set_as_last_used_for_type(app,
-#else
-            if(!g_app_info_add_supports_type(app,
-#endif
                                         fm_mime_type_get_type(mime_type), &err))
             {
                 g_debug("error: %s", err->message);

@@ -70,11 +70,7 @@ static volatile gint init_done = 0;
  */
 gboolean fm_init(FmConfig* config)
 {
-#if GLIB_CHECK_VERSION(2, 30, 0)
     if (g_atomic_int_add(&init_done, 1) != 0)
-#else
-    if (g_atomic_int_exchange_and_add(&init_done, 1) != 0)
-#endif
         return FALSE; /* duplicate call */
 
 #ifdef ENABLE_NLS
@@ -82,12 +78,6 @@ gboolean fm_init(FmConfig* config)
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 #endif
 
-#if !GLIB_CHECK_VERSION(2, 36, 0)
-    g_type_init();
-#endif
-#if !GLIB_CHECK_VERSION(2, 32, 0)
-    g_thread_init(NULL);
-#endif
     g_thread_pool_set_max_idle_time(10000); /* is 10 sec enough? */
 
     if(config)

@@ -27,7 +27,6 @@
 #include "fm.h"
 #include "fm-folder-view.h"
 #include "fm-gtk-utils.h"
-#include "glib-compat.h"
 
 #include "fm-action.h"
 
@@ -90,11 +89,7 @@ static void add_custom_action_item(GString* xml, FmActionMenu *root_menu,
     }
 
     act = gtk_action_new(g_app_info_get_id(item),
-#if GLIB_CHECK_VERSION(2, 24, 0)
                          g_app_info_get_display_name(item),
-#else
-                         g_app_info_get_name(item),
-#endif
                          g_app_info_get_description(item),
                          NULL);
 

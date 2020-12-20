@@ -27,7 +27,6 @@
 #include <glib/gi18n.h>
 
 #include "fm-gtk.h"
-#include "../glib-compat.h"
 
 static GtkDialog* dlg;
 static GtkComboBox* browser;
@@ -90,11 +89,7 @@ int main(int argc, char** argv)
             {
                 app = G_APP_INFO(l->data);
                 /* x-scheme-handler/http is set by chooser already */
-#if GLIB_CHECK_VERSION(2, 27, 6)
                 g_app_info_set_as_last_used_for_type(app, "x-scheme-handler/https", NULL);
-#else
-                g_app_info_add_supports_type(app, "x-scheme-handler/https", NULL);
-#endif
             }
             /* custom_apps is owned by the combobox and shouldn't be freed. */
         }

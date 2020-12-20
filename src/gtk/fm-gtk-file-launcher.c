@@ -45,7 +45,6 @@
 #include "fm-app-chooser-dlg.h"
 
 #include "fm.h"
-#include "glib-compat.h"
 
 /* for open() */
 #include <sys/types.h>

@@ -25,7 +25,6 @@
 #endif
 
 #include "fm-file.h"
-#include "glib-compat.h"
 #include "fm-utils.h"
 #include "fm-xml-file.h"
 
@@ -2997,7 +2996,6 @@ static GFileMonitor *_fm_vfs_menu_monitor_file(GFile *file,
     return NULL;
 }
 
-#if GLIB_CHECK_VERSION(2, 22, 0)
 static GFileIOStream *_fm_vfs_menu_open_readwrite(GFile *file,
                                                   GCancellable *cancellable,
                                                   GError **error)
@@ -3025,7 +3023,6 @@ static GFileIOStream *_fm_vfs_menu_replace_readwrite(GFile *file,
     ERROR_UNSUPPORTED(error);
     return NULL;
 }
-#endif /* Glib >= 2.22 */
 
 static void fm_menu_g_file_init(GFileIface *iface)
 {
@@ -3067,12 +3064,10 @@ static void fm_menu_g_file_init(GFileIface *iface)
     iface->move = _fm_vfs_menu_move;
     iface->monitor_dir = _fm_vfs_menu_monitor_dir;
     iface->monitor_file = _fm_vfs_menu_monitor_file;
-#if GLIB_CHECK_VERSION(2, 22, 0)
     iface->open_readwrite = _fm_vfs_menu_open_readwrite;
     iface->create_readwrite = _fm_vfs_menu_create_readwrite;
     iface->replace_readwrite = _fm_vfs_menu_replace_readwrite;
     iface->supports_thread_contexts = TRUE;
-#endif /* Glib >= 2.22 */
 
     list = g_file_attribute_info_list_new();
     g_file_attribute_info_list_add(list, G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN,

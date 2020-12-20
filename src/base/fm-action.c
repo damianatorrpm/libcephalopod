@@ -38,7 +38,6 @@
 
 #include "fm-action.h"
 #include "fm-terminal.h"
-#include "glib-compat.h"
 
 #include <glib.h>
 #include <glib/gstdio.h>
@@ -190,11 +189,7 @@ static GList *cache_menus; /* list of FmActionMenu, ref */
 static GSList *cache_to_update; /* strings list, allocated, updater_data invalid if NULL */
 static FmActionCache **cache_updater_data; /* locked, freed by idle function */
 
-#if GLIB_CHECK_VERSION(2, 32, 0)
 static GWeakRef singleton;
-#else
-static int cache_n_ref = 0;
-#endif
 
 G_LOCK_DEFINE_STATIC(update); /* protects all lists */
 
@@ -819,7 +814,6 @@ static const char * _fm_action_get_commandline(GAppInfo *appinfo)
     return FM_ACTION(appinfo)->exec;
 }
 
-#if GLIB_CHECK_VERSION(2, 24, 0)
 static const char * _fm_action_get_display_name(GAppInfo *appinfo)
 {
 //    _expand_params(str, action->info->desc, action->menu, NULL);
@@ -827,7 +821,6 @@ static const char * _fm_action_get_display_name(GAppInfo *appinfo)
         return FM_ACTION(appinfo)->info->tooltip;
     return _fm_action_get_name(appinfo);
 }
-#endif
 
 static void fm_action_g_app_info_init(GAppInfoIface *iface)
 {
@@ -851,12 +844,8 @@ static void fm_action_g_app_info_init(GAppInfoIface *iface)
     iface->can_delete = _fm_action_false;
     iface->do_delete = _fm_action_do_delete;
     iface->get_commandline = _fm_action_get_commandline;
-#if GLIB_CHECK_VERSION(2, 24, 0)
     iface->get_display_name = _fm_action_get_display_name;
-#endif
-#if GLIB_CHECK_VERSION(2, 28, 0)
     iface->set_as_last_used_for_type = _fm_action_return_false_unsupported;
-#endif
 }
 
 
@@ -1011,13 +1000,11 @@ static gboolean _fm_action_menu_do_delete(GAppInfo *appinfo)
     return FALSE;
 }
 
-#if GLIB_CHECK_VERSION(2, 24, 0)
 static const char * _fm_action_menu_get_display_name(GAppInfo *appinfo)
 {
 //    _expand_params(str, menu->desc, menu, NULL);
     return FM_ACTION_MENU(appinfo)->tooltip;
 }
-#endif
 
 static void fm_action_menu_g_app_info_init(GAppInfoIface *iface)
 {
@@ -1041,12 +1028,8 @@ static void fm_action_menu_g_app_info_init(GAppInfoIface *iface)
     iface->can_delete = _fm_action_false;
     iface->do_delete = _fm_action_menu_do_delete;
     iface->get_commandline = _fm_action_menu_get_executable;
-#if GLIB_CHECK_VERSION(2, 24, 0)
     iface->get_display_name = _fm_action_menu_get_display_name;
-#endif
-#if GLIB_CHECK_VERSION(2, 28, 0)
     iface->set_as_last_used_for_type = _fm_action_return_false_unsupported;
-#endif
 }
 
 
@@ -1064,13 +1047,6 @@ static void _fm_action_cache_finalize(GObject *object)
     FmActionDir *l_dirs;
 
     G_LOCK(update); /* lock it ahead to prevent race condition */
-#if !GLIB_CHECK_VERSION(2, 32, 0)
-    if (!g_atomic_int_dec_and_test(&cache_n_ref))
-    {
-        G_UNLOCK(update);
-        goto finish;
-    }
-#endif
     if (cache_to_update != NULL)
         *cache_updater_data = NULL; /* terminate the updater */
     /* updater is finished now, can free everything */
@@ -1096,9 +1072,6 @@ static void _fm_action_cache_finalize(GObject *object)
         g_object_unref(dir->dir);
         g_slice_free(FmActionDir, dir);
     }
-#if !GLIB_CHECK_VERSION(2, 32, 0)
-finish:
-#endif
 
     G_OBJECT_CLASS(fm_action_cache_parent_class)->finalize(object);
 }
@@ -1669,9 +1642,7 @@ static void _action_cache_monitor_event(GFileMonitor *mon, GFile *gf,
         g_free(basename);
         g_free(filename);
         break;
-#if GLIB_CHECK_VERSION(2, 24, 0)
     case G_FILE_MONITOR_EVENT_MOVED:
-#endif
     case G_FILE_MONITOR_EVENT_ATTRIBUTE_CHANGED:
     case G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT:
     case G_FILE_MONITOR_EVENT_PRE_UNMOUNT:
@@ -1824,7 +1795,7 @@ static gboolean _matches_cond(FmFileInfoList *files, FmFileInfo *location,
             g_string_free(str, TRUE);
             break;
         case CONDITION_TYPE_DBUS: /* ShowIfRegistered */
-#if defined(ENABLE_DBUS) && GLIB_CHECK_VERSION(2, 24, 0)
+#if defined(ENABLE_DBUS)
             str = g_string_size_new(64);
             _expand_params(str, cond->str, root, TRUE, NULL);
             /* DBus call is taken from GLib sources: gio/tests/gdbus-names.c */
@@ -2365,7 +2336,6 @@ FmActionCache *fm_action_cache_new(void)
     char *path;
     guint i;
 
-#if GLIB_CHECK_VERSION(2, 32, 0)
     G_LOCK(update); /* lock it to prevent creation of two instances */
     cache = g_weak_ref_get(&singleton);
     if (cache != NULL)
@@ -2373,16 +2343,9 @@ FmActionCache *fm_action_cache_new(void)
         G_UNLOCK(update);
         return cache;
     }
-#endif
     /* Create an instance */
     cache = (FmActionCache *)g_object_new(FM_TYPE_ACTION_CACHE, NULL);
-#if GLIB_CHECK_VERSION(2, 32, 0)
     g_weak_ref_set(&singleton, cache);
-#else
-    if (g_atomic_int_exchange_and_add(&cache_n_ref, 1) > 0)
-        return cache;
-    G_LOCK(update); /* wait if disposal of previous is in progress yet */
-#endif
     /* Cleanup before setup */
     cache_dirs = NULL;
     cache_actions = NULL;

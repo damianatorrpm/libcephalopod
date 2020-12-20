@@ -86,7 +86,6 @@ IGNORE_HFILES= \
 	exo-string.h \
 	exo-tree-view.h \
 	fm-actions.h \
-	glib-compat.h \
 	$(NULL)
 
 # Images to copy into HTML directory.

@@ -93,12 +93,7 @@ AC_ARG_ENABLE([gtk3],
     gtk3=$enableval, gtk3="yes")
 
 # modules required
-if test x"$enable_actions" = xyes; then
-  gio_modules="gio-unix-2.0 >= 2.26.0 glib-2.0 >= 2.26.0"
-else
-  gio_modules="glib-2.0 >= 2.22.0 gio-unix-2.0"
-fi
-gio_modules="$gio_modules gthread-2.0 gobject-2.0"
+gio_modules="glib-2.0 >= 2.37.6 gio-unix-2.0 >= 2.37.6 gthread-2.0 gobject-2.0"
 
 PKG_CHECK_MODULES(GIO, [$gio_modules])
 AC_SUBST(GIO_CFLAGS)

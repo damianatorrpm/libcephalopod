@@ -30,9 +30,6 @@
 #include "exo-marshal.h"
 #include "exo-private.h"
 
-/* libfm specific */
-#include "glib-compat.h"
-
 #define             I_(string)  g_intern_static_string(string)
 
 #if defined(G_PARAM_STATIC_NAME) && defined(G_PARAM_STATIC_NICK) && defined(G_PARAM_STATIC_BLURB)

@@ -23,11 +23,6 @@ AM_CPPFLAGS = \
 	-Werror-implicit-function-declaration \
 	$(NULL)
 
-glib_compat_SOURCES= \
-	glib-compat.c \
-	glib-compat.h \
-	$(NULL)
-
 base_SOURCES = \
 	base/fm-action.c \
 	base/fm-app-info.c \
@@ -69,7 +64,6 @@ job_SOURCES = \
 
 libfm_SOURCES = \
 	fm.c \
-	$(glib_compat_SOURCES) \
 	$(base_SOURCES) \
 	$(job_SOURCES) \
 	$(NULL)
@@ -93,7 +87,6 @@ exo_SOURCES = \
 
 libfm_gtk_SOURCES = \
 	fm-gtk.c \
-	$(glib_compat_SOURCES) \
 	$(exo_SOURCES) \
 	gtk/fm-app-chooser-combo-box.c \
 	gtk/fm-app-chooser-dlg.c \
@@ -317,7 +310,6 @@ bin_PROGRAMS = @LIBFM_PREF_APPS@
 endif
 
 libfm_pref_apps_SOURCES = \
-	$(glib_compat_SOURCES) \
 	tools/libfm-pref-apps.c \
 	$(NULL)
 
@@ -368,7 +360,6 @@ lxshortcut_LDADD = \
 if ENABLE_DEMO
 bin_PROGRAMS += libfm-demo
 libfm_demo_SOURCES = \
-	$(glib_compat_SOURCES) \
 	demo/libfm-demo.c \
 	demo/main-win.c demo/main-win.h \
 	$(NULL)
@@ -401,7 +392,6 @@ if !HAVE_SCHEME_HANDLER
 giomodules_LTLIBRARIES = libgiofm.la
 
 libgiofm_la_SOURCES= \
-	$(glib_compat_SOURCES) \
 	gio/module.c \
 	gio/fm-app-lookup.c \
 	gio/fm-app-lookup.h \

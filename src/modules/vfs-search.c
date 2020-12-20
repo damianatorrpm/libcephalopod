@@ -1235,7 +1235,6 @@ static GFileMonitor *_fm_vfs_search_monitor_file(GFile *file,
     return NULL;
 }
 
-#if GLIB_CHECK_VERSION(2, 22, 0)
 static GFileIOStream *_fm_vfs_search_open_readwrite(GFile *file,
                                                     GCancellable *cancellable,
                                                     GError **error)
@@ -1263,7 +1262,6 @@ static GFileIOStream *_fm_vfs_search_replace_readwrite(GFile *file,
     ERROR_UNSUPPORTED(error);
     return NULL;
 }
-#endif /* Glib >= 2.22 */
 
 static void fm_search_g_file_init(GFileIface *iface)
 {
@@ -1303,12 +1301,10 @@ static void fm_search_g_file_init(GFileIface *iface)
     iface->move = _fm_vfs_search_move;
     iface->monitor_dir = _fm_vfs_search_monitor_dir;
     iface->monitor_file = _fm_vfs_search_monitor_file;
-#if GLIB_CHECK_VERSION(2, 22, 0)
     iface->open_readwrite = _fm_vfs_search_open_readwrite;
     iface->create_readwrite = _fm_vfs_search_create_readwrite;
     iface->replace_readwrite = _fm_vfs_search_replace_readwrite;
     iface->supports_thread_contexts = TRUE;
-#endif /* Glib >= 2.22 */
 }
 
 

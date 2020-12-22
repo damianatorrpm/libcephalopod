@@ -828,7 +828,7 @@ _skip_templates_dir:
         _template_dir_init(dir, gfile);
     g_object_unref(gfile);
     /* jobs will fill list of files async */
-    g_signal_connect(fm_config, "changed::template_type_once",
+    g_signal_connect(fm_config, "changed::template-type-once",
                      G_CALLBACK(on_once_type_changed), NULL);
 }
 

@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 
     /* setup LibFM for its default config */
     config = fm_config_new();
-    fm_config_load_from_file(config, "/dev/null");
+    fm_config_load(config);
     fm_gtk_init(config);
     /* set modules blacklist and allow only application/x-desktop */
     fm_config->modules_blacklist = g_strdupv(bl);

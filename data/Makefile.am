@@ -10,9 +10,9 @@ endif
 mimedir = $(datadir)/mime/packages
 mime_DATA = libfm.xml
 
-libfmconfdir = $(sysconfdir)/xdg/libfm
+libfmconfdir = $(datadir)/glib-2.0/schemas
 libfmconf_DATA = \
-	libfm.conf \
+	com.github.libcephalopod.gschema.xml \
 	$(NULL)
 
 desktop_in_files= \

@@ -196,8 +196,7 @@ FmConfigClass
 FmDndDestDropAction
 fm_config
 fm_config_emit_changed
-fm_config_load_from_file
-fm_config_load_from_key_file
+fm_config_load
 fm_config_new
 fm_config_save
 <SUBSECTION Standard>

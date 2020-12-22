@@ -5,7 +5,8 @@
  *      Copyright 2009 Juergen Hoetzel <juergen@archlinux.org>
  *      Copyright 2012-2014 Andriy Grytsenko (LStranger) <andrej@rep.kiev.ua>
  *      Copyright 2016 Mamoru TASAKA <mtasaka@fedoraproject.org>
- *
+ *      Copyright 2020-2021 Damian Ivanov <damianatorrpm@gmail.com>
+ * 
  *      This file is a part of the Libfm library.
  *
  *      This library is free software; you can redistribute it and/or
@@ -25,20 +26,14 @@
 
 /**
  * SECTION:fm-config
- * @short_description: Configuration file support for applications that use libfm.
+ * @short_description: Configuration support for applications that use libfm.
  * @title: FmConfig
  *
  * @include: libfm/fm.h
  *
  * The #FmConfig represents basic configuration options that are used by
- * libfm classes and methods. Methods of class #FmConfig allow use either
- * default file (~/.config/libfm/libfm.conf) or another one to load the
- * configuration and to save it.
+ * libfm classes and methods.
  */
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "fm-config.h"
 #include "fm-utils.h"
@@ -59,6 +54,156 @@ static void fm_config_finalize              (GObject *object);
 
 G_DEFINE_TYPE(FmConfig, fm_config, G_TYPE_OBJECT);
 
+static int drop_action_from_str(FmConfig* cfg)
+{
+    gint res;
+    char *str = g_settings_get_string(cfg->settings, "drop-action");
+    if (g_strcmp0(str, "Auto") == 0)
+        res = FM_DND_DEST_DROP_AUTO;
+    else if (g_strcmp0(str, "Copy") == 0)
+        res = FM_DND_DEST_DROP_COPY;
+    else if (g_strcmp0(str, "Move") == 0)
+        res = FM_DND_DEST_DROP_MOVE;
+    else if (g_strcmp0(str, "Ask") == 0)
+        res = FM_DND_DEST_DROP_ASK;     
+    else
+        g_error("Setting outside of gsettings choice boundary.");
+
+    g_free(str);
+    return res;  
+}
+static void on_external_settings_change(GSettings *settings, gchar *key,
+                                        gpointer data)
+{
+    FmConfig *self = FM_CONFIG(data);
+    if (g_strcmp0(key, "drop-action") == 0)
+        self->drop_default_action = drop_action_from_str(self);     
+
+    else if (g_strcmp0(key, "archiver") == 0)
+        self->archiver = g_settings_get_string(settings, key);
+
+    else if (g_strcmp0(key, "terminal") == 0)
+        self->terminal = g_settings_get_string(settings, key);
+
+    else if (g_strcmp0(key, "list-view-size-units") == 0)
+        self->list_view_size_units = g_settings_get_string(settings, key);
+
+    else if (g_strcmp0(key, "saved-search") == 0)
+        self->saved_search = g_settings_get_string(settings, key);
+
+    else if (g_strcmp0(key, "format-command") == 0)
+        self->format_cmd = g_settings_get_string(settings, key);
+
+    else if (g_strcmp0(key, "modules-blacklist") == 0)
+        self->modules_blacklist = g_settings_get_strv(settings, key);
+
+    else if (g_strcmp0(key, "modules-whitelist") == 0)
+        self->modules_whitelist = g_settings_get_strv(settings, key);
+
+    else if (g_strcmp0(key, "si-unit") == 0)
+        self->si_unit = g_settings_get_boolean(settings, key);
+
+    else if (g_strcmp0(key, "single-click") == 0)
+        self->single_click = g_settings_get_boolean(settings, key);
+
+    else if (g_strcmp0(key, "use-trash") == 0)
+        self->use_trash = g_settings_get_boolean(settings, key);
+
+    else if (g_strcmp0(key, "confirm-trash") == 0)
+        self->confirm_trash = g_settings_get_boolean(settings, key);
+
+    else if (g_strcmp0(key, "confirm-deletion") == 0)
+        self->confirm_del = g_settings_get_boolean(settings, key);
+
+    else if (g_strcmp0(key, "show-thumbnails") == 0)
+        self->show_thumbnail = g_settings_get_boolean(settings, key); 
+
+    else if (g_strcmp0(key, "thumbnail-only-local") == 0)
+        self->thumbnail_local = g_settings_get_boolean(settings, key); 
+
+    else if (g_strcmp0(key, "startup-notify") == 0)
+        self->force_startup_notify = g_settings_get_boolean(settings, key); 
+
+    else if (g_strcmp0(key, "backup-hidden") == 0)
+        self->backup_as_hidden = g_settings_get_boolean(settings, key); 
+
+    else if (g_strcmp0(key, "no-usb-trash") == 0)
+        self->no_usb_trash = g_settings_get_boolean(settings, key);         
+
+    else if (g_strcmp0(key, "expand-empty") == 0)
+        self->no_child_non_expandable = g_settings_get_boolean(settings, key);    
+
+    else if (g_strcmp0(key, "show-full-names") == 0)
+        self->show_full_names = g_settings_get_boolean(settings, key);    
+
+    else if (g_strcmp0(key, "only-user-templates") == 0)
+        self->only_user_templates = g_settings_get_boolean(settings, key);    
+
+    else if (g_strcmp0(key, "template-run-app") == 0)
+        self->template_run_app = g_settings_get_boolean(settings, key);            
+
+    else if (g_strcmp0(key, "template-type-once") == 0)
+        self->template_type_once = g_settings_get_boolean(settings, key);    
+
+    else if (g_strcmp0(key, "advanced-mode") == 0)
+        self->advanced_mode = g_settings_get_boolean(settings, key);    
+
+    else if (g_strcmp0(key, "shadow-hidden") == 0)
+        self->shadow_hidden = g_settings_get_boolean(settings, key);    
+
+    else if (g_strcmp0(key, "defer-content-test") == 0)
+        self->defer_content_test = g_settings_get_boolean(settings, key);  
+
+    else if (g_strcmp0(key, "quick-exec") == 0)
+        self->quick_exec = g_settings_get_boolean(settings, key);  
+
+    else if (g_strcmp0(key, "smart-desktop-drop") == 0)
+        self->smart_desktop_autodrop = g_settings_get_boolean(settings, key);  
+
+    else if (g_strcmp0(key, "show-places-home") == 0)
+        self->places_home = g_settings_get_boolean(settings, key);  
+
+    else if (g_strcmp0(key, "show-places-desktop") == 0)
+        self->places_desktop = g_settings_get_boolean(settings, key);  
+
+    else if (g_strcmp0(key, "show-places-root") == 0)
+        self->places_root = g_settings_get_boolean(settings, key);  
+
+    else if (g_strcmp0(key, "show-places-computer") == 0)
+        self->places_computer = g_settings_get_boolean(settings, key);  
+
+    else if (g_strcmp0(key, "show-places-trash") == 0)
+        self->places_trash = g_settings_get_boolean(settings, key);  
+
+    else if (g_strcmp0(key, "show-places-applications") == 0)
+        self->places_applications = g_settings_get_boolean(settings, key);  
+
+    else if (g_strcmp0(key, "show-places-network") == 0)
+        self->places_network = g_settings_get_boolean(settings, key);  
+
+    else if (g_strcmp0(key, "show-places-unmounted") == 0)
+        self->places_unmounted = g_settings_get_boolean(settings, key); 
+
+    else if (g_strcmp0(key, "auto-selection-delay") == 0)
+        self->auto_selection_delay = g_settings_get_int(settings, key); 
+
+    else if (g_strcmp0(key, "thumbnail-maximum-size") == 0)
+        self->thumbnail_max = g_settings_get_int(settings, key); 
+
+    else if (g_strcmp0(key, "big-icon-size") == 0)
+        self->big_icon_size = g_settings_get_int(settings, key); 
+
+    else if (g_strcmp0(key, "small-icon-size") == 0)
+        self->small_icon_size = g_settings_get_int(settings, key); 
+
+    else if (g_strcmp0(key, "thumbnail-icon-size") == 0)
+        self->thumbnail_size = g_settings_get_int(settings, key); 
+
+    else if (g_strcmp0(key, "pane-icon-size") == 0)
+        self->pane_icon_size = g_settings_get_int(settings, key); 
+
+    fm_config_emit_changed(self, (const char*) key);
+}
 
 static void fm_config_class_init(FmConfigClass *klass)
 {
@@ -86,28 +231,6 @@ static void fm_config_class_init(FmConfigClass *klass)
 
 }
 
-static void _on_cfg_file_changed(GFileMonitor *mon, GFile *gf, GFile *other,
-                                 GFileMonitorEvent evt, FmConfig *cfg);
-
-static inline void _cfg_monitor_free(FmConfig *cfg)
-{
-    if (cfg->_cfg_mon)
-    {
-        g_signal_handlers_disconnect_by_func(cfg->_cfg_mon, _on_cfg_file_changed, cfg);
-        g_object_unref(cfg->_cfg_mon);
-        cfg->_cfg_mon = NULL;
-    }
-}
-
-static inline void _cfg_monitor_add(FmConfig *cfg, const char *path)
-{
-    GFile *gf = g_file_new_for_path(path);
-    cfg->_cfg_mon = g_file_monitor_file(gf, G_FILE_MONITOR_NONE, NULL, NULL);
-    g_object_unref(gf);
-    if (cfg->_cfg_mon)
-        g_signal_connect(cfg->_cfg_mon, "changed", G_CALLBACK(_on_cfg_file_changed), cfg);
-}
-
 static void fm_config_finalize(GObject *object)
 {
     FmConfig* cfg;
@@ -115,8 +238,8 @@ static void fm_config_finalize(GObject *object)
     g_return_if_fail(FM_IS_CONFIG(object));
 
     cfg = (FmConfig*)object;
-    _cfg_monitor_free(cfg);
-    g_free(cfg->_cfg_name);
+    g_settings_sync();
+
     if(cfg->terminal)
         g_free(cfg->terminal);
     if(cfg->archiver)
@@ -134,46 +257,28 @@ static void fm_config_finalize(GObject *object)
 
 static void fm_config_init(FmConfig *self)
 {
-    self->single_click = FM_CONFIG_DEFAULT_SINGLE_CLICK;
-    self->auto_selection_delay = FM_CONFIG_DEFAULT_AUTO_SELECTION_DELAY;
-    self->use_trash = FM_CONFIG_DEFAULT_USE_TRASH;
-    self->confirm_del = FM_CONFIG_DEFAULT_CONFIRM_DEL;
-    self->confirm_trash = FM_CONFIG_DEFAULT_CONFIRM_TRASH;
-    self->big_icon_size = FM_CONFIG_DEFAULT_BIG_ICON_SIZE;
-    self->small_icon_size = FM_CONFIG_DEFAULT_SMALL_ICON_SIZE;
-    self->pane_icon_size = FM_CONFIG_DEFAULT_PANE_ICON_SIZE;
-    self->thumbnail_size = FM_CONFIG_DEFAULT_THUMBNAIL_SIZE;
-    self->show_thumbnail = FM_CONFIG_DEFAULT_SHOW_THUMBNAIL;
-    self->thumbnail_local = FM_CONFIG_DEFAULT_THUMBNAIL_LOCAL;
-    self->thumbnail_max = FM_CONFIG_DEFAULT_THUMBNAIL_MAX;
-    /* si_unit defaulted to FALSE */
-    /* terminal and archiver defaulted to NULL */
-    /* drop_default_action defaulted to 0 */
-    /* modules_blacklist and modules_whitelist defaulted to NULL */
-    /* format_cmd defaulted to NULL */
-    /* list_view_size_units defaulted to NULL */
-    /* saved_search defaulted to NULL */
-    self->advanced_mode = FALSE;
-    self->force_startup_notify = FM_CONFIG_DEFAULT_FORCE_S_NOTIFY;
-    self->backup_as_hidden = FM_CONFIG_DEFAULT_BACKUP_HIDDEN;
-    self->no_usb_trash = FM_CONFIG_DEFAULT_NO_USB_TRASH;
-    self->no_child_non_expandable = FM_CONFIG_DEFAULT_NO_EXPAND_EMPTY;
-    self->show_full_names = FM_CONFIG_DEFAULT_SHOW_FULL_NAMES;
-    self->shadow_hidden = FM_CONFIG_DEFAULT_SHADOW_HIDDEN;
-    self->only_user_templates = FM_CONFIG_DEFAULT_ONLY_USER_TEMPLATES;
-    self->template_run_app = FM_CONFIG_DEFAULT_TEMPLATE_RUN_APP;
-    self->template_type_once = FM_CONFIG_DEFAULT_TEMPL_TYPE_ONCE;
-    self->defer_content_test = FM_CONFIG_DEFAULT_DEFER_CONTENT_TEST;
-    self->quick_exec = FM_CONFIG_DEFAULT_QUICK_EXEC;
-    self->places_home = FM_CONFIG_DEFAULT_PLACES_HOME;
-    self->places_desktop = FM_CONFIG_DEFAULT_PLACES_DESKTOP;
-    self->places_root = FM_CONFIG_DEFAULT_PLACES_ROOT;
-    self->places_computer = FM_CONFIG_DEFAULT_PLACES_COMPUTER;
-    self->places_trash = FM_CONFIG_DEFAULT_PLACES_TRASH;
-    self->places_applications = FM_CONFIG_DEFAULT_PLACES_APPLICATIONS;
-    self->places_network = FM_CONFIG_DEFAULT_PLACES_NETWORK;
-    self->places_unmounted = FM_CONFIG_DEFAULT_PLACES_UNMOUNTED;
-    self->smart_desktop_autodrop = FM_CONFIG_DEFAULT_SMART_DESKTOP_AUTODROP;
+    /** 
+     * default settings profile
+     */
+    self->settings = g_settings_new_with_path(
+        "com.github.libcephalopod", "/com/github/libcephalopod/default/");
+  
+    g_signal_connect(self->settings, "changed",
+                     G_CALLBACK(on_external_settings_change), self);
+    /**
+     * Since we use a relocatable path to support multiple profiles
+     * the settings path is invisible in dconf-editor because nothing has
+     * changed and gsettings only stores settings that are different 
+     * from the default, so dconf-editor is not aware of the path.
+     * We just set some value to it's current settings to make
+     * dconf-editor see the path.
+     * Alternativetely one could add the path to dconf-editor's 
+     * own settings. TODO: contact dconf-editor mainainer
+     * to add /com/github/libcephalopod/* and /com/github/cephalopod/*
+     * Than this workaround can be dropped
+     */
+    gboolean uxplus = g_settings_get_boolean(self->settings, "si-unit");
+    g_settings_set_boolean(self->settings, "si-unit", uxplus);        
 }
 
 /**
@@ -190,15 +295,6 @@ FmConfig *fm_config_new(void)
     return (FmConfig*)g_object_new(FM_CONFIG_TYPE, NULL);
 }
 
-static void _on_cfg_file_changed(GFileMonitor *mon, GFile *gf, GFile *other,
-                                 GFileMonitorEvent evt, FmConfig *cfg)
-{
-    if (evt == G_FILE_MONITOR_EVENT_DELETED)
-        _cfg_monitor_free(cfg);
-    else
-        fm_config_load_from_file(cfg, cfg->_cfg_name);
-}
-
 /**
  * fm_config_emit_changed
  * @cfg: pointer to configuration
@@ -207,8 +303,6 @@ static void _on_cfg_file_changed(GFileMonitor *mon, GFile *gf, GFile *other,
  * Causes the #FmConfig::changed signal to be emitted.
  *
  * This API is not thread-safe and should be used only in default context.
- *
- * Since: 0.1.0
  */
 void fm_config_emit_changed(FmConfig* cfg, const char* changed_key)
 {
@@ -216,321 +310,160 @@ void fm_config_emit_changed(FmConfig* cfg, const char* changed_key)
     g_signal_emit(cfg, signals[CHANGED], detail);
 }
 
-static void _parse_drop_default_action(GKeyFile *kf, gint *action)
+/**
+ * fm_config_reset
+ * @cfg: pointer to configuration
+ * @key: what should be reset
+ */
+void fm_config_reset(FmConfig *cfg, const char *key)
 {
-    char *str = g_key_file_get_string(kf, "config", "drop_default_action", NULL);
-    if (str)
-    {
-        switch (str[0])
-        {
-        case '0': case '1': case '2': case '3':
-            /* backward compatibility */
-            *action = (str[0] - '0');
-            break;
-        case 'a':
-            if (str[1] == 'u') /* 'auto' */
-                *action = FM_DND_DEST_DROP_AUTO;
-            else if (str[1] == 's') /* 'ask' */
-                *action = FM_DND_DEST_DROP_ASK;
-            break;
-        case 'c': /* 'copy' */
-            *action = FM_DND_DEST_DROP_COPY;
-            break;
-        case 'm': /* 'move' */
-            *action = FM_DND_DEST_DROP_MOVE;
-        default: ; /* ignore invalid values */
-        }
-        g_free(str);
-    }
+   g_settings_reset (cfg->settings, key);
 }
 
 /**
- * fm_config_load_from_key_file
+ * fm_config_load
  * @cfg: pointer to configuration
- * @kf: a #GKeyFile with configuration keys and values
- *
- * Fills configuration @cfg with data from #GKeyFile @kf.
- *
- * Since: 0.1.0
+ * Fills configuration @cfg with data gsettings
  */
-void fm_config_load_from_key_file(FmConfig* cfg, GKeyFile* kf)
+void fm_config_load(FmConfig* cfg)
 {
     char **strv;
+    cfg->use_trash = g_settings_get_boolean(cfg->settings, "use-trash");
+    cfg->single_click = g_settings_get_boolean(cfg->settings, "single-click");
+    cfg->confirm_del = g_settings_get_boolean(cfg->settings, "confirm-deletion");
+    cfg->confirm_trash = g_settings_get_boolean(cfg->settings, "confirm-trash");
+    cfg->thumbnail_local = g_settings_get_boolean(cfg->settings, "thumbnail-only-local");
+    cfg->advanced_mode = g_settings_get_boolean(cfg->settings, "advanced-mode");
+    cfg->si_unit = g_settings_get_boolean(cfg->settings, "si-unit");
+    cfg->force_startup_notify = g_settings_get_boolean(cfg->settings, "startup-notify");
+    cfg->backup_as_hidden = g_settings_get_boolean(cfg->settings, "backup-hidden");
+    cfg->no_usb_trash = g_settings_get_boolean(cfg->settings, "no-usb-trash");
+    cfg->no_child_non_expandable = g_settings_get_boolean(cfg->settings, "expand-empty");
+    cfg->show_full_names = g_settings_get_boolean(cfg->settings, "show-full-names");
+    cfg->only_user_templates = g_settings_get_boolean(cfg->settings, "only-user-templates");
+    cfg->template_run_app = g_settings_get_boolean(cfg->settings, "template-run-app");
+    cfg->template_type_once = g_settings_get_boolean(cfg->settings, "template-type-once");
+    cfg->defer_content_test = g_settings_get_boolean(cfg->settings, "defer-content-test");
+    cfg->quick_exec = g_settings_get_boolean(cfg->settings, "quick-exec");
+    cfg->smart_desktop_autodrop = g_settings_get_boolean(cfg->settings, "smart-desktop-drop");
+    cfg->places_home = g_settings_get_boolean(cfg->settings, "show-places-home");
+    cfg->places_desktop = g_settings_get_boolean(cfg->settings, "show-places-desktop");
+    cfg->places_root = g_settings_get_boolean(cfg->settings, "show-places-root");
+    cfg->places_computer = g_settings_get_boolean(cfg->settings, "show-places-computer");
+    cfg->places_trash = g_settings_get_boolean(cfg->settings, "show-places-trash");
+    cfg->places_applications = g_settings_get_boolean(cfg->settings, "show-places-applications");
+    cfg->places_network = g_settings_get_boolean(cfg->settings, "show-places-network");
+    cfg->places_unmounted = g_settings_get_boolean(cfg->settings, "show-places-unmounted");
+    cfg->show_thumbnail = g_settings_get_boolean(cfg->settings, "show-thumbnails");
+    cfg->shadow_hidden = g_settings_get_boolean(cfg->settings, "shadow-hidden");   
+    cfg->thumbnail_max = g_settings_get_int(cfg->settings, "thumbnail-maximum-size");
+    cfg->big_icon_size = g_settings_get_int(cfg->settings, "big-icon-size");
+    cfg->small_icon_size = g_settings_get_int(cfg->settings, "small-icon-size");
+    cfg->pane_icon_size = g_settings_get_int(cfg->settings, "pane-icon-size");
+    cfg->thumbnail_size = g_settings_get_int(cfg->settings, "thumbnail-icon-size");
+    cfg->auto_selection_delay = g_settings_get_int(cfg->settings, "auto-selection-delay");
 
-    fm_key_file_get_bool(kf, "config", "use_trash", &cfg->use_trash);
-    fm_key_file_get_bool(kf, "config", "single_click", &cfg->single_click);
-    fm_key_file_get_int(kf, "config", "auto_selection_delay", &cfg->auto_selection_delay);
-    fm_key_file_get_bool(kf, "config", "confirm_del", &cfg->confirm_del);
-    fm_key_file_get_bool(kf, "config", "confirm_trash", &cfg->confirm_trash);
+    g_free(cfg->list_view_size_units);
+    cfg->list_view_size_units = g_settings_get_string(cfg->settings, "list-view-size-units");
+  
+    g_free(cfg->saved_search);
+    cfg->saved_search = g_settings_get_string(cfg->settings, "saved-search");
+
+    g_free(cfg->format_cmd);
+    cfg->format_cmd = g_settings_get_string(cfg->settings, "format-command");
+
     if(cfg->terminal)
         g_free(cfg->terminal);
-    cfg->terminal = g_key_file_get_string(kf, "config", "terminal", NULL);
+    cfg->terminal = g_settings_get_string(cfg->settings, "terminal");
+
     if(cfg->archiver)
         g_free(cfg->archiver);
-    cfg->archiver = g_key_file_get_string(kf, "config", "archiver", NULL);
-    fm_key_file_get_bool(kf, "config", "thumbnail_local", &cfg->thumbnail_local);
-    fm_key_file_get_int(kf, "config", "thumbnail_max", &cfg->thumbnail_max);
-    fm_key_file_get_bool(kf, "config", "advanced_mode", &cfg->advanced_mode);
-    fm_key_file_get_bool(kf, "config", "si_unit", &cfg->si_unit);
-    fm_key_file_get_bool(kf, "config", "force_startup_notify", &cfg->force_startup_notify);
-    fm_key_file_get_bool(kf, "config", "backup_as_hidden", &cfg->backup_as_hidden);
-    fm_key_file_get_bool(kf, "config", "no_usb_trash", &cfg->no_usb_trash);
-    fm_key_file_get_bool(kf, "config", "no_child_non_expandable", &cfg->no_child_non_expandable);
-    _parse_drop_default_action(kf, &cfg->drop_default_action);
-    fm_key_file_get_bool(kf, "config", "show_full_names", &cfg->show_full_names);
-    fm_key_file_get_bool(kf, "config", "only_user_templates", &cfg->only_user_templates);
-    fm_key_file_get_bool(kf, "config", "template_run_app", &cfg->template_run_app);
-    fm_key_file_get_bool(kf, "config", "template_type_once", &cfg->template_type_once);
-    fm_key_file_get_bool(kf, "config", "defer_content_test", &cfg->defer_content_test);
-    fm_key_file_get_bool(kf, "config", "quick_exec", &cfg->quick_exec);
-    fm_key_file_get_bool(kf, "config", "smart_desktop_autodrop", &cfg->smart_desktop_autodrop);
-    g_free(cfg->format_cmd);
-    cfg->format_cmd = g_key_file_get_string(kf, "config", "format_cmd", NULL);
+    cfg->archiver = g_settings_get_string(cfg->settings, "archiver");
+
+    cfg->drop_default_action = drop_action_from_str(cfg);     
+ 
     /* append blacklist */
-    strv = g_key_file_get_string_list(kf, "config", "modules_blacklist", NULL, NULL);
+    strv = g_settings_get_strv(cfg->settings, "modules-blacklist");
     fm_strcatv(&cfg->modules_blacklist, strv);
     g_strfreev(strv);
+
     /* replace whitelist */
     g_strfreev(cfg->modules_whitelist);
-    cfg->modules_whitelist = g_key_file_get_string_list(kf, "config", "modules_whitelist", NULL, NULL);
+    cfg->modules_whitelist = g_settings_get_strv(cfg->settings, "modules-whitelist");
 
-    fm_key_file_get_int(kf, "ui", "big_icon_size", &cfg->big_icon_size);
-    fm_key_file_get_int(kf, "ui", "small_icon_size", &cfg->small_icon_size);
-    fm_key_file_get_int(kf, "ui", "pane_icon_size", &cfg->pane_icon_size);
-    fm_key_file_get_int(kf, "ui", "thumbnail_size", &cfg->thumbnail_size);
-    fm_key_file_get_bool(kf, "ui", "show_thumbnail", &cfg->show_thumbnail);
-    fm_key_file_get_bool(kf, "ui", "shadow_hidden", &cfg->shadow_hidden);
-    g_free(cfg->list_view_size_units);
-    cfg->list_view_size_units = g_key_file_get_string(kf, "ui", "list_view_size_units", NULL);
-    g_free(cfg->saved_search);
-    cfg->saved_search = g_key_file_get_string(kf, "ui", "saved_search", NULL);
-
-    fm_key_file_get_bool(kf, "places", "places_home", &cfg->places_home);
-    fm_key_file_get_bool(kf, "places", "places_desktop", &cfg->places_desktop);
-    fm_key_file_get_bool(kf, "places", "places_root", &cfg->places_root);
-    fm_key_file_get_bool(kf, "places", "places_computer", &cfg->places_computer);
-    fm_key_file_get_bool(kf, "places", "places_trash", &cfg->places_trash);
-    fm_key_file_get_bool(kf, "places", "places_applications", &cfg->places_applications);
-    fm_key_file_get_bool(kf, "places", "places_network", &cfg->places_network);
-    fm_key_file_get_bool(kf, "places", "places_unmounted", &cfg->places_unmounted);
-}
-
-/**
- * fm_config_load_from_file
- * @cfg: pointer to configuration
- * @name: (allow-none): file name to load configuration
- *
- * Fills configuration @cfg with data from configuration file. The file
- * @name may be %NULL to load default configuration file. If @name is
- * full path then that file will be loaded. Otherwise @name will be
- * searched in system config directories and after that in ~/.config/
- * directory and all found files will be loaded, overwriting existing
- * data in @cfg.
- *
- * See also: fm_config_load_from_key_file()
- *
- * Since: 0.1.0
- */
-void fm_config_load_from_file(FmConfig* cfg, const char* name)
-{
-    const gchar * const *dirs, * const *dir;
-    char *path;
-    char *old_cfg_name;
-    GKeyFile* kf = g_key_file_new();
-
-    old_cfg_name = cfg->_cfg_name;
-    g_strfreev(cfg->modules_blacklist);
-    g_strfreev(cfg->system_modules_blacklist);
-    cfg->modules_blacklist = NULL;
-    cfg->system_modules_blacklist = NULL;
-    _cfg_monitor_free(cfg);
-    if(G_LIKELY(!name))
-        name = "libfm/libfm.conf";
-    else
-    {
-        if(G_UNLIKELY(g_path_is_absolute(name)))
-        {
-            cfg->_cfg_name = g_strdup(name);
-            if(g_key_file_load_from_file(kf, name, 0, NULL))
-            {
-                fm_config_load_from_key_file(cfg, kf);
-                _cfg_monitor_add(cfg, name);
-            }
-            goto _out;
-        }
-    }
-
-    cfg->_cfg_name = g_strdup(name);
-    dirs = g_get_system_config_dirs();
-    /* bug SF #887: first dir in XDG_CONFIG_DIRS is the most relevant
-       so we shoult process the list in reverse order */
-    dir = dirs;
-    while (*dir)
-        ++dir;
-    while (dir-- != dirs)
-    {
-        path = g_build_filename(*dir, name, NULL);
-        if(g_key_file_load_from_file(kf, path, 0, NULL))
-            fm_config_load_from_key_file(cfg, kf);
-        g_free(path);
-    }
-    /* we got all system blacklists, save them and get user's one */
-    cfg->system_modules_blacklist = cfg->modules_blacklist;
-    cfg->modules_blacklist = NULL;
-    path = g_build_filename(g_get_user_config_dir(), name, NULL);
-    if(g_key_file_load_from_file(kf, path, 0, NULL))
-    {
-        fm_config_load_from_key_file(cfg, kf);
-        _cfg_monitor_add(cfg, path);
-    }
-    g_free(path);
-
-_out:
-    g_key_file_free(kf);
-    g_free(old_cfg_name);
     g_signal_emit(cfg, signals[CHANGED], 0);
-    /* FIXME: compare and send individual changes instead */
 }
-
-#define _save_config_bool(_str_,_cfg_,_name_) \
-    g_string_append(_str_, #_name_); \
-    g_string_append(_str_, _cfg_->_name_ ? "=1\n" : "=0\n")
-
-#define _save_config_int(_str_,_cfg_,_name_) \
-    g_string_append_printf(_str_, #_name_ "=%d\n", _cfg_->_name_)
-
-#define _save_config_string(_str_,_cfg_,_name_) \
-    if (_cfg_->_name_ != NULL) \
-        g_string_append_printf(_str_, #_name_ "=%s\n", _cfg_->_name_)
-
-#define _save_config_strv(_str_,_cfg_,_name_) do {\
-    if(_cfg_->_name_ != NULL && _cfg_->_name_[0] != NULL) \
-    { \
-        char **list, *c; \
-        g_string_append(_str_, #_name_ "="); \
-        for (list = _cfg_->_name_; (c = *list); list++) \
-        { \
-            while (*c) \
-            { \
-                if (G_UNLIKELY(*c == '\\')) \
-                    g_string_append_c(_str_, '\\'); \
-                g_string_append_c(_str_, *c++); \
-            } \
-            g_string_append_c(_str_, ';'); \
-        } \
-        g_string_append_c(_str_, '\n'); \
-    } \
-} while(0)
-
-#define _save_drop_action(_str_,_cfg_,_name_) do { \
-    switch (_cfg_->_name_) \
-    { \
-    case FM_DND_DEST_DROP_AUTO: \
-        g_string_append(_str_, #_name_ "=auto\n"); \
-        break; \
-    case FM_DND_DEST_DROP_COPY: \
-        g_string_append(_str_, #_name_ "=copy\n"); \
-        break; \
-    case FM_DND_DEST_DROP_MOVE: \
-        g_string_append(_str_, #_name_ "=move\n"); \
-        break; \
-    case FM_DND_DEST_DROP_ASK: \
-        g_string_append(_str_, #_name_ "=ask\n"); \
-        break; \
-    } \
-} while(0)
 
 /**
  * fm_config_save
  * @cfg: pointer to configuration
- * @name: (allow-none): file name to save configuration
  *
- * Saves configuration into configuration file @name. If @name is %NULL
- * then configuration will be saved into default configuration file.
- * Otherwise it will be saved into file @name under directory ~/.config.
- *
- * Since: 0.1.0
+ * Sync config to gsettings because of user interaction
+ * with preference windows 
+ * TODO: It shouldn't be required to set *all* settings
+ * when only 1 may changed.
+ * TODO: g_settings_set_* can return false in case 
+ * of admin overrides. Show message indicating 
+ * that this setting is not allowed.
  */
-void fm_config_save(FmConfig* cfg, const char* name)
+void fm_config_save(FmConfig* cfg)
 {
-    char* path = NULL;;
-    char* dir_path;
-    FILE* f;
-    GString *str;
-    if(!name)
-        name = path = g_build_filename(g_get_user_config_dir(), "libfm/libfm.conf", NULL);
-    else if(!g_path_is_absolute(name))
-        name = path = g_build_filename(g_get_user_config_dir(), name, NULL);
+  g_settings_set_boolean (cfg->settings, "use-trash", cfg->use_trash);   
+  g_settings_set_boolean (cfg->settings, "single-click", cfg->single_click);
+  g_settings_set_boolean (cfg->settings, "confirm-deletion", cfg->confirm_del);
+  g_settings_set_boolean (cfg->settings, "confirm-trash", cfg->confirm_trash);
+  g_settings_set_boolean (cfg->settings, "thumbnail-only-local", cfg->thumbnail_local);
+  g_settings_set_boolean (cfg->settings, "advanced-mode", cfg->advanced_mode);
+  g_settings_set_boolean (cfg->settings, "si-unit", cfg->si_unit);
+  g_settings_set_boolean (cfg->settings, "startup-notify", cfg->force_startup_notify);
+  g_settings_set_boolean (cfg->settings, "backup-hidden", cfg->backup_as_hidden);
+  g_settings_set_boolean (cfg->settings, "no-usb-trash", cfg->no_usb_trash);
+  g_settings_set_boolean (cfg->settings, "expand-empty", cfg->no_child_non_expandable);
+  g_settings_set_boolean (cfg->settings, "show-full-names", cfg->show_full_names);
+  g_settings_set_boolean (cfg->settings, "only-user-templates", cfg->only_user_templates);
+  g_settings_set_boolean (cfg->settings, "template-run-app", cfg->template_run_app);
+  g_settings_set_boolean (cfg->settings, "template-type-once", cfg->template_type_once);
+  g_settings_set_boolean (cfg->settings, "defer-content-test", cfg->defer_content_test);
+  g_settings_set_boolean (cfg->settings, "quick-exec", cfg->quick_exec);
+  g_settings_set_boolean (cfg->settings, "smart-desktop-drop", cfg->smart_desktop_autodrop);
+  g_settings_set_boolean (cfg->settings, "show-places-home", cfg->places_home);
+  g_settings_set_boolean (cfg->settings, "show-places-desktop", cfg->places_desktop);
+  g_settings_set_boolean (cfg->settings, "show-places-root", cfg->places_root);
+  g_settings_set_boolean (cfg->settings, "show-places-computer", cfg->places_computer);
+  g_settings_set_boolean (cfg->settings, "show-places-trash", cfg->places_trash);
+  g_settings_set_boolean (cfg->settings, "show-places-applications", cfg->places_applications);
+  g_settings_set_boolean (cfg->settings, "show-places-network", cfg->places_network);
+  g_settings_set_boolean (cfg->settings, "show-places-unmounted", cfg->places_unmounted);
+  g_settings_set_boolean (cfg->settings, "show-thumbnails", cfg->show_thumbnail);
+  g_settings_set_boolean (cfg->settings, "shadow-hidden", cfg->shadow_hidden);
 
-    dir_path = g_path_get_dirname(name);
-    if(g_mkdir_with_parents(dir_path, 0700) != -1)
-    {
-        if (cfg->_cfg_mon)
-            g_signal_handlers_block_by_func(cfg->_cfg_mon, _on_cfg_file_changed, cfg);
-        f = fopen(name, "w");
-        if(f)
-        {
-            str = g_string_new("# Configuration file for the libfm version " PACKAGE_VERSION ".\n"
-                               "# Autogenerated file, don't edit, your changes will be overwritten.\n"
-                               "\n[config]\n");
-                _save_config_bool(str, cfg, single_click);
-                _save_config_bool(str, cfg, use_trash);
-                _save_config_bool(str, cfg, confirm_del);
-                _save_config_bool(str, cfg, confirm_trash);
-                _save_config_bool(str, cfg, advanced_mode);
-                _save_config_bool(str, cfg, si_unit);
-                _save_config_bool(str, cfg, force_startup_notify);
-                _save_config_bool(str, cfg, backup_as_hidden);
-                _save_config_bool(str, cfg, no_usb_trash);
-                _save_config_bool(str, cfg, no_child_non_expandable);
-                _save_config_bool(str, cfg, show_full_names);
-                _save_config_bool(str, cfg, only_user_templates);
-                _save_config_bool(str, cfg, template_run_app);
-                _save_config_bool(str, cfg, template_type_once);
-                _save_config_int(str, cfg, auto_selection_delay);
-                _save_drop_action(str, cfg, drop_default_action);
-                _save_config_bool(str, cfg, defer_content_test);
-                _save_config_bool(str, cfg, quick_exec);
-                _save_config_string(str, cfg, terminal);
-                _save_config_string(str, cfg, archiver);
-                _save_config_string(str, cfg, format_cmd);
-                _save_config_bool(str, cfg, thumbnail_local);
-                _save_config_int(str, cfg, thumbnail_max);
-                _save_config_strv(str, cfg, modules_blacklist);
-                _save_config_strv(str, cfg, modules_whitelist);
-                _save_config_bool(str, cfg, smart_desktop_autodrop);
-            g_string_append(str, "\n[ui]\n");
-                _save_config_int(str, cfg, big_icon_size);
-                _save_config_int(str, cfg, small_icon_size);
-                _save_config_int(str, cfg, pane_icon_size);
-                _save_config_int(str, cfg, thumbnail_size);
-                _save_config_bool(str, cfg, show_thumbnail);
-                _save_config_bool(str, cfg, shadow_hidden);
-                if (cfg->list_view_size_units && cfg->list_view_size_units[0])
-                    cfg->list_view_size_units[1] = '\0'; /* leave only 1 char */
-                _save_config_string(str, cfg, list_view_size_units);
-                _save_config_string(str, cfg, saved_search);
-            g_string_append(str, "\n[places]\n");
-                _save_config_bool(str, cfg, places_home);
-                _save_config_bool(str, cfg, places_desktop);
-                _save_config_bool(str, cfg, places_root);
-                _save_config_bool(str, cfg, places_computer);
-                _save_config_bool(str, cfg, places_trash);
-                _save_config_bool(str, cfg, places_applications);
-                _save_config_bool(str, cfg, places_network);
-                _save_config_bool(str, cfg, places_unmounted);
-            fwrite(str->str, 1, str->len, f);
-            fclose(f);
-            g_string_free(str, TRUE);
-        }
-        if (cfg->_cfg_mon)
-            g_signal_handlers_unblock_by_func(cfg->_cfg_mon, _on_cfg_file_changed, cfg);
-    }
-    g_free(dir_path);
-    g_free(path);
-}
+  g_settings_set_int (cfg->settings, "thumbnail-maximum-size", cfg->thumbnail_max);
+  g_settings_set_int (cfg->settings, "big-icon-size", cfg->big_icon_size);
+  g_settings_set_int (cfg->settings, "small-icon-size", cfg->small_icon_size);
+  g_settings_set_int (cfg->settings, "pane-icon-size", cfg->pane_icon_size);
+  g_settings_set_int (cfg->settings, "thumbnail-icon-size", cfg->thumbnail_size);
+  g_settings_set_int (cfg->settings, "auto-selection-delay", cfg->auto_selection_delay);
 
-const char *_fm_config_get_name(FmConfig *cfg)
-{
-    return cfg->_cfg_name;
+  g_settings_set_string (cfg->settings, "terminal", cfg->terminal);
+  g_settings_set_string (cfg->settings, "archiver", cfg->archiver);
+  g_settings_set_string (cfg->settings, "format-command", cfg->format_cmd);
+  g_settings_set_string (cfg->settings, "list-view-size-units", cfg->list_view_size_units);
+  g_settings_set_string (cfg->settings, "saved-search", cfg->saved_search);
+
+  g_settings_set_strv (cfg->settings, "modules-blacklist", cfg->modules_blacklist);
+  g_settings_set_strv (cfg->settings, "modules-whitelist", cfg->modules_whitelist);
+
+  if (cfg->list_view_size_units && cfg->list_view_size_units[0])
+  cfg->list_view_size_units[1] = '\0'; /* leave only 1 char */
+
+  if (cfg->drop_default_action = FM_DND_DEST_DROP_AUTO)
+      g_settings_set_string (cfg->settings, "drop-action", "Auto");
+  else if (cfg->drop_default_action = FM_DND_DEST_DROP_COPY)
+      cfg->drop_default_action = FM_DND_DEST_DROP_COPY;
+  else if (cfg->drop_default_action = FM_DND_DEST_DROP_MOVE)
+      cfg->drop_default_action = FM_DND_DEST_DROP_MOVE;
+  else if (cfg->drop_default_action = FM_DND_DEST_DROP_ASK)
+      cfg->drop_default_action = FM_DND_DEST_DROP_ASK;   
+  else
+      g_error("Impossible value detected");      
 }

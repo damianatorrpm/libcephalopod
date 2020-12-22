@@ -962,27 +962,27 @@ static void fm_places_model_init(FmPlacesModel *self)
     self->theme_change_handler = g_signal_connect_swapped(gtk_icon_theme_get_default(), "changed",
                                             G_CALLBACK(update_icons), self);
 
-    self->use_trash_change_handler = g_signal_connect(fm_config, "changed::use_trash",
+    self->use_trash_change_handler = g_signal_connect(fm_config, "changed::use-trash",
                                              G_CALLBACK(on_use_trash_changed), self);
 
-    self->places_home_change_handler = g_signal_connect(fm_config, "changed::places_home",
+    self->places_home_change_handler = g_signal_connect(fm_config, "changed::places-home",
                                              G_CALLBACK(on_places_home_changed), self);
-    self->places_desktop_change_handler = g_signal_connect(fm_config, "changed::places_desktop",
+    self->places_desktop_change_handler = g_signal_connect(fm_config, "changed::places-desktop",
                                              G_CALLBACK(on_places_desktop_changed), self);
-    self->places_root_change_handler = g_signal_connect(fm_config, "changed::places_root",
+    self->places_root_change_handler = g_signal_connect(fm_config, "changed::places-root",
                                              G_CALLBACK(on_places_root_changed), self);
-    self->places_computer_change_handler = g_signal_connect(fm_config, "changed::places_computer",
+    self->places_computer_change_handler = g_signal_connect(fm_config, "changed::places-computer",
                                              G_CALLBACK(on_places_computer_changed), self);
-    self->places_trash_change_handler = g_signal_connect(fm_config, "changed::places_trash",
+    self->places_trash_change_handler = g_signal_connect(fm_config, "changed::places-trash",
                                              G_CALLBACK(on_use_trash_changed), self);
-    self->places_applications_change_handler = g_signal_connect(fm_config, "changed::places_applications",
+    self->places_applications_change_handler = g_signal_connect(fm_config, "changed::places-applications",
                                              G_CALLBACK(on_places_applications_changed), self);
-    self->places_network_change_handler = g_signal_connect(fm_config, "changed::places_network",
+    self->places_network_change_handler = g_signal_connect(fm_config, "changed::places-network",
                                              G_CALLBACK(on_places_network_changed), self);
-    self->places_unmounted_change_handler = g_signal_connect(fm_config, "changed::places_unmounted",
+    self->places_unmounted_change_handler = g_signal_connect(fm_config, "changed::places-unmounted",
                                              G_CALLBACK(on_places_unmounted_changed), self);
 
-    self->pane_icon_size_change_handler = g_signal_connect(fm_config, "changed::pane_icon_size",
+    self->pane_icon_size_change_handler = g_signal_connect(fm_config, "changed::pane-icon-size",
                                              G_CALLBACK(on_pane_icon_size_changed), self);
     icon = fm_icon_from_name("media-eject");
     self->eject_icon = fm_pixbuf_from_icon(icon, fm_config->pane_icon_size);

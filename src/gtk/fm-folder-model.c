@@ -219,9 +219,9 @@ static void fm_folder_model_init(FmFolderModel* model)
 
     model->theme_change_handler = g_signal_connect(gtk_icon_theme_get_default(), "changed",
                                                    G_CALLBACK(on_icon_theme_changed), model);
-    g_signal_connect(fm_config, "changed::show_thumbnail", G_CALLBACK(on_show_thumbnail_changed), model);
-    g_signal_connect(fm_config, "changed::thumbnail_local", G_CALLBACK(on_thumbnail_local_changed), model);
-    g_signal_connect(fm_config, "changed::thumbnail_max", G_CALLBACK(on_thumbnail_max_changed), model);
+    g_signal_connect(fm_config, "changed::show-thumbnails", G_CALLBACK(on_show_thumbnail_changed), model);
+    g_signal_connect(fm_config, "changed::thumbnail-only-local", G_CALLBACK(on_thumbnail_local_changed), model);
+    g_signal_connect(fm_config, "changed::thumbnail-maximum-size", G_CALLBACK(on_thumbnail_max_changed), model);
 
     model->thumbnail_max = fm_config->thumbnail_max << 10;
     model->items_hash = g_hash_table_new(g_direct_hash, g_direct_equal);

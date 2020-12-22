@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="gsettings-desktop-schemas">
+ <schema id="com.github.libcephalopod">
+    <key type="s" name="drop-action">
+      <choices>
+        <choice value='Auto'/>
+        <choice value='Copy'/>
+        <choice value='Move'/>
+        <choice value='Ask'/>
+      </choices>
+      <summary>default action on drop.</summary>
+      <default>'Auto'</default>
+    </key>     
+    <key type="s" name="archiver">
+      <default>"file-roller"</default>
+      <summary>desktop_id of the archiver used.</summary>
+    </key> 
+    <key type="s" name="terminal">
+      <default>"gnome-terminal"</default>
+      <summary>command line to launch terminal emulator.</summary>
+    </key>     
+    <key type="s" name="list-view-size-units">
+      <default>""</default>
+      <summary>file size units in list view: h, k, M, G.</summary>
+    </key>  
+    <key type="s" name="saved-search">
+      <default>""</default>
+      <summary>internal saved data of fm_launch_search_simple()</summary>
+    </key>    
+    <key type="s" name="format-command">
+      <default>""</default>
+      <summary>command to format the volume (device will be added)</summary>
+    </key>            
+    <key type="as" name="modules-blacklist">
+      <default>['']</default>
+      <summary>list of modules (mask in form "type:name") to never load</summary>           
+    </key>        
+    <key type="as" name="modules-whitelist">
+      <default>['']</default>
+      <summary>list of excemptions from @modules_blacklist</summary>           
+    </key>        
+    <key type="b" name="si-unit">
+      <default>false</default>
+      <summary>use SI prefix for file sizes.</summary>      
+    </key>       
+    <key type="b" name="single-click">
+      <default>false</default>
+      <summary>Whether the items activate on single_click.</summary>      
+    </key>
+    <key type="b" name="use-trash">
+      <default>false</default>
+      <summary>Whether to skip the trash on delete.</summary>      
+      <description>If disabled pressing delete will permanently delete the file.
+      </description>
+    </key>
+    <key type="b" name="confirm-trash">
+      <default>false</default>
+      <summary>Whether to ask for confirmation when trashing files.</summary>      
+      <description>If disabled pressing delete will trash files without confirmation.
+      </description>
+    </key>    
+    <key type="b" name="confirm-deletion">
+      <default>false</default>
+      <summary>Whether to ask for confirmation when deleting files.</summary>      
+      <description>If disabled pressing delete delete files without confirmation.
+      </description>
+    </key>
+    <key type="b" name="show-thumbnails">
+      <default>true</default>
+      <summary>Whether to show thumbnails.</summary>      
+      <description>Performance is better without thumbnails.
+      </description>
+    </key>
+    <key type="b" name="thumbnail-only-local">
+      <default>true</default>
+      <summary>Whether to only thumbnail local files.</summary>      
+      <description>If disabled remote files will be thumbnailed. May cause performance issues.
+      </description>
+    </key>
+    <key type="b" name="startup-notify">
+      <default>true</default>
+      <summary>use startup notify by default</summary>      
+    </key>  
+    <key type="b" name="backup-hidden">
+      <default>true</default>
+      <summary>treat backup files as hidden</summary>      
+    </key>  
+    <key type="b" name="no-usb-trash">
+      <default>false</default>
+      <summary>don't create trash folder on removable media</summary>      
+    </key>      
+    <key type="b" name="expand-empty">
+      <default>true</default>
+      <summary>hide expanders on empty folder</summary>      
+    </key>
+    <key type="b" name="show-full-names">
+      <default>true</default>
+      <summary>always show full names in Icon View mode</summary>      
+    </key>  
+    <key type="b" name="only-user-templates">
+      <default>true</default>
+      <summary>show only user defined templates in Create... menu</summary>      
+    </key>       
+    <key type="b" name="template-run-app">
+      <default>true</default>
+      <summary>run default application after creation from template</summary>      
+    </key>                  
+    <key type="b" name="template-type-once">
+      <default>true</default>
+      <summary>use only one template of each MIME type</summary>      
+    </key>    
+    <key type="b" name="advanced-mode">
+      <default>false</default>
+      <summary>enable advanced features for experienced user</summary>      
+    </key>      
+    <key type="b" name="shadow-hidden">
+      <default>true</default>
+      <summary>show icons of hidden files shadowed in the view</summary>      
+    </key>     
+    <key type="b" name="defer-content-test">
+      <default>true</default>
+      <summary>defer test for content type on folder loading</summary>      
+    </key>    
+    <key type="b" name="quick-exec">
+      <default>true</default>
+      <summary>don't ask user for action on executable launch</summary>      
+    </key>      
+    <key type="b" name="smart-desktop-drop">
+      <default>true</default>
+      <summary>enable "smart shortcut" auto-action for ~/Desktop</summary>      
+    </key>          
+    <key type="b" name="show-places-home">
+      <default>true</default>
+      <summary>show 'Home' item in Places</summary>      
+    </key>         
+    <key type="b" name="show-places-desktop">
+      <default>true</default>
+      <summary>show 'Desktop' item in Places</summary>      
+    </key> 
+    <key type="b" name="show-places-root">
+      <default>true</default>
+      <summary>show '/' item in Places</summary>      
+    </key> 
+    <key type="b" name="show-places-computer">
+      <default>true</default>
+      <summary>show 'My computer' item in Places</summary>      
+    </key>     
+    <key type="b" name="show-places-trash">
+      <default>true</default>
+      <summary>show 'Trash' item in Places</summary>      
+    </key>      
+    <key type="b" name="show-places-applications">
+      <default>true</default>
+      <summary>show 'Applications' item in Places</summary>      
+    </key>     
+    <key type="b" name="show-places-network">
+      <default>true</default>
+      <summary>show 'Network' item in Places</summary>      
+    </key>        
+    <key type="b" name="show-places-unmounted">
+      <default>true</default>
+      <summary>show unmounted internal volumes in Places</summary>      
+    </key>     
+    <key type="i" name="auto-selection-delay">
+      <default>600</default>
+      <summary>Delay for autoselection in single-click mode, in ms.</summary>      
+    </key>                        
+    <key type="i" name="thumbnail-maximum-size">
+      <default>2048</default>
+      <summary>Show thumbnails only for files not bigger than this, in KB or Kpix</summary>
+    </key>
+    <key type="i" name="big-icon-size">
+      <default>48</default>
+      <summary>Size of big icons.</summary>      
+      <description>Size of big icons.</description>
+    </key>
+    <key type="i" name="small-icon-size">
+      <default>24</default>
+      <summary>Size of small icons.</summary>      
+      <description>Size of small icons.</description>
+    </key>
+        <key type="i" name="thumbnail-icon-size">
+      <default>128</default>
+      <summary>Size of thumnail icons.</summary>      
+      <description>Size of thumnail icons.</description>
+    </key>
+        <key type="i" name="pane-icon-size">
+      <default>24</default>
+      <summary>Size of side pane icons.</summary>      
+    </key>   
+  </schema>
+</schemalist>

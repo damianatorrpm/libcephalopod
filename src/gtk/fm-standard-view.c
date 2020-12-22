@@ -202,8 +202,8 @@ static void fm_standard_view_init(FmStandardView *self)
     gtk_scrolled_window_set_policy((GtkScrolledWindow*)self, GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
     /* config change notifications */
-    g_signal_connect(fm_config, "changed::single_click", G_CALLBACK(on_single_click_changed), self);
-    g_signal_connect(fm_config, "changed::auto_selection_delay", G_CALLBACK(on_auto_selection_delay_changed), self);
+    g_signal_connect(fm_config, "changed::single-click", G_CALLBACK(on_single_click_changed), self);
+    g_signal_connect(fm_config, "changed::auto-selection-delay", G_CALLBACK(on_auto_selection_delay_changed), self);
 
     /* dnd support */
     self->dnd_src = fm_dnd_src_new(NULL);
@@ -560,7 +560,7 @@ static inline void create_icon_view(FmStandardView* fv, GList* sels)
 
     if(fv->mode == FM_FV_COMPACT_VIEW) /* compact view */
     {
-        fv->icon_size_changed_handler = g_signal_connect(fm_config, "changed::small_icon_size", G_CALLBACK(on_small_icon_size_changed), fv);
+        fv->icon_size_changed_handler = g_signal_connect(fm_config, "changed::small-icon-size", G_CALLBACK(on_small_icon_size_changed), fv);
         icon_size = fm_config->small_icon_size;
         fm_cell_renderer_pixbuf_set_fixed_size(fv->renderer_pixbuf, icon_size, icon_size);
         if(model)
@@ -577,7 +577,7 @@ static inline void create_icon_view(FmStandardView* fv, GList* sels)
     else /* big icon view or thumbnail view */
     {
         if(fv->show_full_names_handler == 0)
-            fv->show_full_names_handler = g_signal_connect(fm_config, "changed::show_full_names", G_CALLBACK(on_show_full_names_changed), fv);
+            fv->show_full_names_handler = g_signal_connect(fm_config, "changed::show-full-names", G_CALLBACK(on_show_full_names_changed), fv);
         if (fm_config->show_full_names)
             font_height = 0;
         else
@@ -592,7 +592,7 @@ static inline void create_icon_view(FmStandardView* fv, GList* sels)
         }
         if(fv->mode == FM_FV_ICON_VIEW)
         {
-            fv->icon_size_changed_handler = g_signal_connect(fm_config, "changed::big_icon_size", G_CALLBACK(on_big_icon_size_changed), fv);
+            fv->icon_size_changed_handler = g_signal_connect(fm_config, "changed::big-icon-size", G_CALLBACK(on_big_icon_size_changed), fv);
             icon_size = fm_config->big_icon_size;
             fm_cell_renderer_pixbuf_set_fixed_size(fv->renderer_pixbuf, icon_size, icon_size);
             if(model)
@@ -612,7 +612,7 @@ static inline void create_icon_view(FmStandardView* fv, GList* sels)
         }
         else
         {
-            fv->icon_size_changed_handler = g_signal_connect(fm_config, "changed::thumbnail_size", G_CALLBACK(on_thumbnail_size_changed), fv);
+            fv->icon_size_changed_handler = g_signal_connect(fm_config, "changed::thumbnail-icon-size", G_CALLBACK(on_thumbnail_size_changed), fv);
             icon_size = fm_config->thumbnail_size;
             fm_cell_renderer_pixbuf_set_fixed_size(fv->renderer_pixbuf, icon_size, icon_size);
             if(model)
@@ -1007,7 +1007,7 @@ static inline void create_list_view(FmStandardView* fv, GList* sels)
     if(fv->renderer_pixbuf)
         g_object_unref(fv->renderer_pixbuf);
     fv->renderer_pixbuf = g_object_ref_sink(fm_cell_renderer_pixbuf_new());
-    fv->icon_size_changed_handler = g_signal_connect(fm_config, "changed::small_icon_size", G_CALLBACK(on_small_icon_size_changed), fv);
+    fv->icon_size_changed_handler = g_signal_connect(fm_config, "changed::small-icon-size", G_CALLBACK(on_small_icon_size_changed), fv);
     icon_size = fm_config->small_icon_size;
     fm_cell_renderer_pixbuf_set_fixed_size(fv->renderer_pixbuf, icon_size, icon_size);
     if(model)

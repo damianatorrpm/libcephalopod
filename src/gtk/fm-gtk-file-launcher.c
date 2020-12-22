@@ -725,7 +725,7 @@ static gboolean launch_search(FileSearchUI* ui)
         g_string_append_printf(search_uri, "/%s/%s", name_patterns, content_pattern);
         g_free(fm_config->saved_search);
         fm_config->saved_search = g_string_free(search_uri, FALSE);
-        fm_config_emit_changed(fm_config, "saved_search");
+        fm_config_emit_changed(fm_config, "saved-search");
         if(_ctx)
             g_object_unref(_ctx);
     }

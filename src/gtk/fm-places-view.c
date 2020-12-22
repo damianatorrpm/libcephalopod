@@ -497,7 +497,7 @@ static void fm_places_view_init(FmPlacesView *self)
 
     col = gtk_tree_view_column_new();
     renderer = (GtkCellRenderer*)fm_cell_renderer_pixbuf_new();
-    handler = g_signal_connect(fm_config, "changed::pane_icon_size", G_CALLBACK(on_renderer_icon_size_changed), renderer);
+    handler = g_signal_connect(fm_config, "changed::pane-icon-size", G_CALLBACK(on_renderer_icon_size_changed), renderer);
     g_object_weak_ref(G_OBJECT(renderer), on_cell_renderer_pixbuf_destroy, GUINT_TO_POINTER(handler));
     fm_cell_renderer_pixbuf_set_fixed_size((FmCellRendererPixbuf*)renderer, fm_config->pane_icon_size, fm_config->pane_icon_size);
 

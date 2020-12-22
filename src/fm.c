@@ -73,10 +73,8 @@ gboolean fm_init(FmConfig* config)
     if (g_atomic_int_add(&init_done, 1) != 0)
         return FALSE; /* duplicate call */
 
-#ifdef ENABLE_NLS
     bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-#endif
 
     g_thread_pool_set_max_idle_time(10000); /* is 10 sec enough? */
 
@@ -86,7 +84,7 @@ gboolean fm_init(FmConfig* config)
     {
         /* create default config object */
         fm_config = fm_config_new();
-        fm_config_load_from_file(fm_config, NULL);
+        fm_config_load(fm_config);
     }
 
     _fm_file_init();
@@ -145,8 +143,7 @@ void fm_finalize(void)
     _fm_icon_finalize();
     _fm_path_finalize();
     _fm_file_finalize();
-
-    /* fm_config_save(fm_config, _fm_config_get_name(fm_config)); */
+  
     g_object_unref(fm_config);
     fm_config = NULL;
 }
